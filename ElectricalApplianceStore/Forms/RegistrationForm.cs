@@ -14,6 +14,7 @@ namespace ElectricalApplianceStore
     public partial class RegistrationForm : Form
     {
         SqlConnection connection;
+        public User user;
         public RegistrationForm(SqlConnection connection)
         {
             InitializeComponent();
@@ -28,8 +29,9 @@ namespace ElectricalApplianceStore
                 return;
             }
 
-            User user = Authorization.Sign_Up(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
-            new Form1(connection, user).Show();
+            user = Authorization.Sign_Up(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

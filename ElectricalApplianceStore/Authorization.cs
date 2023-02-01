@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ElectricalApplianceStore
 {
@@ -34,6 +35,28 @@ namespace ElectricalApplianceStore
             insertCommand.ExecuteNonQuery();
 
             return Sign_In(connection, email, password);
+        }
+
+        public static void SwitchingForm(SqlConnection connection, User user, Form parentForm)
+        {
+            parentForm.Visible = false;
+            Form form = new Form();
+            switch (user.Type)
+            {
+                case UserType.User:
+                    form = new UserForm(connection, user);
+                    break;
+                case UserType.Admin:
+                    form = new SelectiveForm(connection, user);
+                    break;
+                default:
+                    break;
+            }
+
+            if(form.ShowDialog() == DialogResult.Cancel)
+            {
+                parentForm.Visible = true;
+            }
         }
     }
 }

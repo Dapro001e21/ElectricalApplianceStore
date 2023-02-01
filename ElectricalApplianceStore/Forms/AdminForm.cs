@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace ElectricalApplianceStore
 {
-    public partial class Form1 : Form
+    public partial class AdminForm : Form
     {
         SqlConnection connection;
         User user;
-        public Form1(SqlConnection connection, User user)
+        public AdminForm(SqlConnection connection, User user)
         {
             InitializeComponent();
             this.connection = connection;

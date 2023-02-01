@@ -30,13 +30,12 @@ namespace ElectricalApplianceStore
             }
 
             User user = Authorization.Sign_In(connection, email_TextBox.Text, password_TextBox.Text);
+            email_TextBox.Text = "";
+            password_TextBox.Text = "";
+
             if(user != null)
             {
-                Visible = false;
-                if(new Form1(connection, user).ShowDialog() == DialogResult.Cancel)
-                {
-                    Visible = true;
-                }
+                Authorization.SwitchingForm(connection, user, this);
             }
             else
             {
@@ -47,9 +46,14 @@ namespace ElectricalApplianceStore
         private void Sign_Up_Button_Click(object sender, EventArgs e)
         {
             Visible = false;
-            if (new RegistrationForm(connection).ShowDialog() == DialogResult.Cancel)
+            RegistrationForm form = new RegistrationForm(connection);
+            DialogResult dialogResult = form.ShowDialog();
+            if (dialogResult == DialogResult.Cancel)
             {
                 Visible = true;
+            }else if(dialogResult == DialogResult.OK)
+            {
+                Authorization.SwitchingForm(connection, form.user, this);
             }
         }
     }
