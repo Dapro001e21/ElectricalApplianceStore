@@ -19,6 +19,8 @@ namespace ElectricalApplianceStore
             InitializeComponent();
             connection = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=ElectricalApplianceStore;Integrated Security=true;MultipleActiveResultSets=True;");
             connection.Open();
+            email_TextBox.Text = "Email";
+            password_TextBox.Text = "Password";
         }
 
         private void Sign_In_Button_Click(object sender, EventArgs e)
