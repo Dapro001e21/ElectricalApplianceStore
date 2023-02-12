@@ -23,9 +23,10 @@ namespace ElectricalApplianceStore
         public string Supplier;
         public double Price;
         public double Weight;
+        public int Amount;
         public ElectricalApplianceType Type;
 
-        public ElectricalAppliance(int id, string name, DateTime dateOfRelease, string supplier, double price, double weight, ElectricalApplianceType type)
+        public ElectricalAppliance(int id, string name, DateTime dateOfRelease, string supplier, double price, double weight, int amount, ElectricalApplianceType type)
         {
             Id = id;
             Name = name;
@@ -33,12 +34,13 @@ namespace ElectricalApplianceStore
             Supplier = supplier;
             Price = price;
             Weight = weight;
+            Amount = amount;
             Type = type;
         }
 
         public override string ToString()
         {
-            return $"{Name} {DateOfRelease.Date.ToShortDateString()} {Supplier} {Price}р {Weight} {Type}";
+            return $"{Name}, {DateOfRelease.Date.ToShortDateString()}, {Supplier}, {Price} ₽, {Weight} кг, {Amount}x, {Type}";
         }
 
         public static Comparison<ElectricalAppliance> SortAscDateOfRelease = delegate (ElectricalAppliance x, ElectricalAppliance y)

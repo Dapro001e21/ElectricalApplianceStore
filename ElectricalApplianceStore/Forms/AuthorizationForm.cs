@@ -27,7 +27,7 @@ namespace ElectricalApplianceStore
         {
             if(string.IsNullOrWhiteSpace(email_TextBox.Text) && string.IsNullOrWhiteSpace(password_TextBox.Text))
             {
-                MessageBox.Show("Заполните все поля!");
+                MessageBox.Show("Заполните все поля!!!");
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace ElectricalApplianceStore
             }
             else
             {
-                MessageBox.Show("Ошибка в логине или пароле!");
+                MessageBox.Show("Ошибка в логине или пароле!!!");
             }
         }
 

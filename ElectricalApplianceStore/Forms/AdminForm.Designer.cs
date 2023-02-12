@@ -32,6 +32,7 @@
             this.save_Button = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.type_Label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,11 +76,20 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Выберите таблицу:";
             // 
+            // type_Label
+            // 
+            this.type_Label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.type_Label.Location = new System.Drawing.Point(457, 37);
+            this.type_Label.Name = "type_Label";
+            this.type_Label.Size = new System.Drawing.Size(208, 299);
+            this.type_Label.TabIndex = 4;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.type_Label);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.save_Button);
@@ -99,5 +109,6 @@
         private System.Windows.Forms.Button save_Button;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label type_Label;
     }
 }

@@ -45,8 +45,9 @@ namespace ElectricalApplianceStore
                 string supplier = reader.GetString(3);
                 double price = reader.GetDouble(4);
                 double weight = reader.GetDouble(5);
-                ElectricalApplianceType type = (ElectricalApplianceType)Enum.Parse(typeof(ElectricalApplianceType), reader.GetString(6));
-                electricalAppliances.Add(new ElectricalAppliance(id, name, dateOfRelease, supplier, price, weight, type));
+                int amount = reader.GetInt32(6);
+                ElectricalApplianceType type = (ElectricalApplianceType)Enum.Parse(typeof(ElectricalApplianceType), reader.GetString(7));
+                electricalAppliances.Add(new ElectricalAppliance(id, name, dateOfRelease, supplier, price, weight, amount, type));
             }
             reader.Close();
             electricalAppliances.ForEach(appliance => electricalAppliances_ListBox.Items.Add(appliance));
@@ -119,6 +120,23 @@ namespace ElectricalApplianceStore
             List<ElectricalAppliance> list = electricalAppliances.Where(appliance => appliance.Type == type).ToList();
             electricalAppliances_ListBox.Items.Clear();
             list.ForEach(appliance => electricalAppliances_ListBox.Items.Add(appliance));
+        }
+
+        private void buy_Button_Click(object sender, EventArgs e)
+        {
+            if (electricalAppliances_ListBox.SelectedIndex == -1)
+                return;
+            ElectricalAppliance appliance = (ElectricalAppliance)electricalAppliances_ListBox.SelectedItem;
+            if(appliance.Amount > 0)
+            {
+                appliance.Amount--;
+                new SqlCommand($"update ElectricalAppliances set Amount = {appliance.Amount} where Id = {appliance.Id}", connection).ExecuteNonQuery();
+                ShowElectricalAppliances();
+            }
+            else
+            {
+                MessageBox.Show("Товар отсутствует в магазине!!!");
+            }
         }
     }
 }

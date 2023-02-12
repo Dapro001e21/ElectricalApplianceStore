@@ -40,6 +40,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.updateElectricalAppliance_Button = new System.Windows.Forms.Button();
             this.show_Button = new System.Windows.Forms.Button();
+            this.buy_Button = new System.Windows.Forms.Button();
+            this.pageTwo_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // exitAccount_Button
@@ -57,7 +59,7 @@
             this.electricalAppliances_ListBox.FormattingEnabled = true;
             this.electricalAppliances_ListBox.Location = new System.Drawing.Point(12, 29);
             this.electricalAppliances_ListBox.Name = "electricalAppliances_ListBox";
-            this.electricalAppliances_ListBox.Size = new System.Drawing.Size(289, 342);
+            this.electricalAppliances_ListBox.Size = new System.Drawing.Size(389, 342);
             this.electricalAppliances_ListBox.TabIndex = 1;
             // 
             // label1
@@ -73,7 +75,7 @@
             // 
             this.type_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.type_ComboBox.FormattingEnabled = true;
-            this.type_ComboBox.Location = new System.Drawing.Point(308, 29);
+            this.type_ComboBox.Location = new System.Drawing.Point(407, 30);
             this.type_ComboBox.Name = "type_ComboBox";
             this.type_ComboBox.Size = new System.Drawing.Size(121, 21);
             this.type_ComboBox.TabIndex = 3;
@@ -81,7 +83,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(308, 12);
+            this.label2.Location = new System.Drawing.Point(407, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 4;
@@ -90,7 +92,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(308, 115);
+            this.label3.Location = new System.Drawing.Point(407, 116);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 13);
             this.label3.TabIndex = 6;
@@ -105,14 +107,14 @@
             "Поставщику",
             "Весу",
             "Стоимости"});
-            this.sort_ComboBox.Location = new System.Drawing.Point(308, 132);
+            this.sort_ComboBox.Location = new System.Drawing.Point(407, 133);
             this.sort_ComboBox.Name = "sort_ComboBox";
             this.sort_ComboBox.Size = new System.Drawing.Size(121, 21);
             this.sort_ComboBox.TabIndex = 5;
             // 
             // sort_Button
             // 
-            this.sort_Button.Location = new System.Drawing.Point(308, 199);
+            this.sort_Button.Location = new System.Drawing.Point(407, 200);
             this.sort_Button.Name = "sort_Button";
             this.sort_Button.Size = new System.Drawing.Size(121, 40);
             this.sort_Button.TabIndex = 7;
@@ -127,7 +129,7 @@
             this.order_ComboBox.Items.AddRange(new object[] {
             "Возрастания",
             "Убывания"});
-            this.order_ComboBox.Location = new System.Drawing.Point(308, 172);
+            this.order_ComboBox.Location = new System.Drawing.Point(407, 173);
             this.order_ComboBox.Name = "order_ComboBox";
             this.order_ComboBox.Size = new System.Drawing.Size(121, 21);
             this.order_ComboBox.TabIndex = 8;
@@ -135,7 +137,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(308, 156);
+            this.label4.Location = new System.Drawing.Point(407, 157);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
             this.label4.TabIndex = 9;
@@ -143,9 +145,9 @@
             // 
             // updateElectricalAppliance_Button
             // 
-            this.updateElectricalAppliance_Button.Location = new System.Drawing.Point(12, 378);
+            this.updateElectricalAppliance_Button.Location = new System.Drawing.Point(12, 377);
             this.updateElectricalAppliance_Button.Name = "updateElectricalAppliance_Button";
-            this.updateElectricalAppliance_Button.Size = new System.Drawing.Size(289, 38);
+            this.updateElectricalAppliance_Button.Size = new System.Drawing.Size(185, 38);
             this.updateElectricalAppliance_Button.TabIndex = 10;
             this.updateElectricalAppliance_Button.Text = "Обновить лист";
             this.updateElectricalAppliance_Button.UseVisualStyleBackColor = true;
@@ -153,7 +155,7 @@
             // 
             // show_Button
             // 
-            this.show_Button.Location = new System.Drawing.Point(308, 57);
+            this.show_Button.Location = new System.Drawing.Point(407, 58);
             this.show_Button.Name = "show_Button";
             this.show_Button.Size = new System.Drawing.Size(121, 36);
             this.show_Button.TabIndex = 11;
@@ -161,11 +163,32 @@
             this.show_Button.UseVisualStyleBackColor = true;
             this.show_Button.Click += new System.EventHandler(this.show_Button_Click);
             // 
+            // buy_Button
+            // 
+            this.buy_Button.Location = new System.Drawing.Point(203, 377);
+            this.buy_Button.Name = "buy_Button";
+            this.buy_Button.Size = new System.Drawing.Size(198, 38);
+            this.buy_Button.TabIndex = 12;
+            this.buy_Button.Text = "Купить";
+            this.buy_Button.UseVisualStyleBackColor = true;
+            this.buy_Button.Click += new System.EventHandler(this.buy_Button_Click);
+            // 
+            // pageTwo_Button
+            // 
+            this.pageTwo_Button.Location = new System.Drawing.Point(676, 403);
+            this.pageTwo_Button.Name = "pageTwo_Button";
+            this.pageTwo_Button.Size = new System.Drawing.Size(121, 46);
+            this.pageTwo_Button.TabIndex = 13;
+            this.pageTwo_Button.Text = "Страница 2";
+            this.pageTwo_Button.UseVisualStyleBackColor = true;
+            // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pageTwo_Button);
+            this.Controls.Add(this.buy_Button);
             this.Controls.Add(this.show_Button);
             this.Controls.Add(this.updateElectricalAppliance_Button);
             this.Controls.Add(this.label4);
@@ -201,5 +224,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button updateElectricalAppliance_Button;
         private System.Windows.Forms.Button show_Button;
+        private System.Windows.Forms.Button buy_Button;
+        private System.Windows.Forms.Button pageTwo_Button;
     }
 }

@@ -25,18 +25,30 @@ namespace ElectricalApplianceStore
             this.user = user;
             userTable = new DataTable();
             electricalAppliancesTable = new DataTable();
-            ShowTables();
             comboBox1.SelectedIndex = 0;
+            ShowTables();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            type_Label.Text = "Type:\n";
+            List<string> typeName = null;
             switch (comboBox1.SelectedIndex)
             {
                 case 0:
+                    typeName = Enum.GetNames(typeof(UserType)).Cast<string>().ToList();
+                    for (int i = 0; i < typeName.Count; i++)
+                    {
+                        type_Label.Text += $"{i + 1}) {typeName[i]}\n";
+                    }
                     dataGridView1.DataSource = userTable;
                     break;
                 case 1:
+                    typeName = Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToList();
+                    for (int i = 0; i < typeName.Count; i++)
+                    {
+                        type_Label.Text += $"{i + 1}) {typeName[i]}\n";
+                    }
                     dataGridView1.DataSource = electricalAppliancesTable;
                     break;
                 default:
@@ -49,9 +61,9 @@ namespace ElectricalApplianceStore
             userTable.Rows.Clear();
             electricalAppliancesTable.Rows.Clear();
 
-            userAdapter = new SqlDataAdapter("select * from Users", connection);
+            userAdapter = new SqlDataAdapter("select Id, Name, Email, Password, Type from Users", connection);
             userAdapter.Fill(userTable);
-            electricalAppliancesAdapter = new SqlDataAdapter("select * from ElectricalAppliances", connection);
+            electricalAppliancesAdapter = new SqlDataAdapter("select Id, Name, DateOfRelease, Supplier, Price, Weight, Amount, Type from ElectricalAppliances", connection);
             electricalAppliancesAdapter.Fill(electricalAppliancesTable);
 
             comboBox1_SelectedIndexChanged(this, null);
@@ -115,12 +127,13 @@ namespace ElectricalApplianceStore
             userAdapter.DeleteCommand = deleteCommandU;
 
             //Insert ElectricalAppliances
-            SqlCommand insertCommandE = new SqlCommand("insert into ElectricalAppliances values (@Name, @DateOfRelease, @Supplier, @Price, @Weight, @Type)", connection);
+            SqlCommand insertCommandE = new SqlCommand("insert into ElectricalAppliances values (@Name, @DateOfRelease, @Supplier, @Price, @Weight, @Amount, @Type)", connection);
             insertCommandE.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 50));
             insertCommandE.Parameters.Add(new SqlParameter("@DateOfRelease", SqlDbType.Date));
             insertCommandE.Parameters.Add(new SqlParameter("@Supplier", SqlDbType.NVarChar, 50));
-            insertCommandE.Parameters.Add(new SqlParameter("@Price", SqlDbType.Money));
-            insertCommandE.Parameters.Add(new SqlParameter("@Weight", SqlDbType.Int));
+            insertCommandE.Parameters.Add(new SqlParameter("@Price", SqlDbType.Float));
+            insertCommandE.Parameters.Add(new SqlParameter("@Weight", SqlDbType.Float));
+            insertCommandE.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Int));
             insertCommandE.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 30));
 
             insertCommandE.Parameters["@Name"].SourceVersion = DataRowVersion.Current;
@@ -128,6 +141,7 @@ namespace ElectricalApplianceStore
             insertCommandE.Parameters["@Supplier"].SourceVersion = DataRowVersion.Current;
             insertCommandE.Parameters["@Price"].SourceVersion = DataRowVersion.Current;
             insertCommandE.Parameters["@Weight"].SourceVersion = DataRowVersion.Current;
+            insertCommandE.Parameters["@Amount"].SourceVersion = DataRowVersion.Current;
             insertCommandE.Parameters["@Type"].SourceVersion = DataRowVersion.Current;
 
             insertCommandE.Parameters["@Name"].SourceColumn = "Name";
@@ -135,17 +149,19 @@ namespace ElectricalApplianceStore
             insertCommandE.Parameters["@Supplier"].SourceColumn = "Supplier";
             insertCommandE.Parameters["@Price"].SourceColumn = "Price";
             insertCommandE.Parameters["@Weight"].SourceColumn = "Weight";
+            insertCommandE.Parameters["@Amount"].SourceColumn = "Amount";
             insertCommandE.Parameters["@Type"].SourceColumn = "Type";
 
             //Update ElectricalAppliances
-            SqlCommand updateCommandE = new SqlCommand("update Users set Name = @Name, DateOfRelease = @DateOfRelease, " +
-                "Supplier = @Supplier, Price = @Price, Weight = @Weight, Type = @Type where Id = @Id", connection);
+            SqlCommand updateCommandE = new SqlCommand("update ElectricalAppliances set Name = @Name, DateOfRelease = @DateOfRelease, " +
+                "Supplier = @Supplier, Price = @Price, Weight = @Weight, Amount = @Amount, Type = @Type where Id = @Id", connection);
             updateCommandE.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int));
             updateCommandE.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 50));
             updateCommandE.Parameters.Add(new SqlParameter("@DateOfRelease", SqlDbType.Date));
             updateCommandE.Parameters.Add(new SqlParameter("@Supplier", SqlDbType.NVarChar, 50));
-            updateCommandE.Parameters.Add(new SqlParameter("@Price", SqlDbType.Money));
-            updateCommandE.Parameters.Add(new SqlParameter("@Weight", SqlDbType.Int));
+            updateCommandE.Parameters.Add(new SqlParameter("@Price", SqlDbType.Float));
+            updateCommandE.Parameters.Add(new SqlParameter("@Weight", SqlDbType.Float));
+            updateCommandE.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Int));
             updateCommandE.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 30));
 
             updateCommandE.Parameters["@Id"].SourceVersion = DataRowVersion.Original;
@@ -154,6 +170,7 @@ namespace ElectricalApplianceStore
             updateCommandE.Parameters["@Supplier"].SourceVersion = DataRowVersion.Current;
             updateCommandE.Parameters["@Price"].SourceVersion = DataRowVersion.Current;
             updateCommandE.Parameters["@Weight"].SourceVersion = DataRowVersion.Current;
+            updateCommandE.Parameters["@Amount"].SourceVersion = DataRowVersion.Current;
             updateCommandE.Parameters["@Type"].SourceVersion = DataRowVersion.Current;
 
             updateCommandE.Parameters["@Id"].SourceColumn = "Id";
@@ -162,7 +179,8 @@ namespace ElectricalApplianceStore
             updateCommandE.Parameters["@Supplier"].SourceColumn = "Supplier";
             updateCommandE.Parameters["@Price"].SourceColumn = "Price";
             updateCommandE.Parameters["@Weight"].SourceColumn = "Weight";
-            updateCommandE.Parameters["@Type"].SourceColumn = "Supplier";
+            updateCommandE.Parameters["@Amount"].SourceColumn = "Amount";
+            updateCommandE.Parameters["@Type"].SourceColumn = "Type";
 
             //Delete ElectricalAppliances
             SqlCommand deleteCommandE = new SqlCommand("delete from ElectricalAppliances where Id = @Id", connection);
