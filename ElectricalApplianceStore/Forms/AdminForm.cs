@@ -15,8 +15,8 @@ namespace ElectricalApplianceStore
     {
         SqlConnection connection;
         User user;
-        SqlDataAdapter userAdapter, electricalAppliancesAdapter;
-        DataTable userTable, electricalAppliancesTable;
+        SqlDataAdapter userAdapter, electricalAppliancesAdapter, sellElectricalAppliancesAdapter;
+        DataTable userTable, electricalAppliancesTable, sellElectricalAppliancesTable;
 
         public AdminForm(SqlConnection connection, User user)
         {
@@ -25,6 +25,7 @@ namespace ElectricalApplianceStore
             this.user = user;
             userTable = new DataTable();
             electricalAppliancesTable = new DataTable();
+            sellElectricalAppliancesTable = new DataTable();
             comboBox1.SelectedIndex = 0;
             ShowTables();
         }
@@ -51,6 +52,14 @@ namespace ElectricalApplianceStore
                     }
                     dataGridView1.DataSource = electricalAppliancesTable;
                     break;
+                case 2:
+                    typeName = Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToList();
+                    for (int i = 0; i < typeName.Count; i++)
+                    {
+                        type_Label.Text += $"{i + 1}) {typeName[i]}\n";
+                    }
+                    dataGridView1.DataSource = sellElectricalAppliancesTable;
+                    break;
                 default:
                     break;
             }
@@ -60,11 +69,14 @@ namespace ElectricalApplianceStore
         {
             userTable.Rows.Clear();
             electricalAppliancesTable.Rows.Clear();
+            sellElectricalAppliancesTable.Rows.Clear();
 
-            userAdapter = new SqlDataAdapter("select Id, Name, Email, Password, Type from Users", connection);
+            userAdapter = new SqlDataAdapter("select * from Users", connection);
             userAdapter.Fill(userTable);
-            electricalAppliancesAdapter = new SqlDataAdapter("select Id, Name, DateOfRelease, Supplier, Price, Weight, Amount, Type from ElectricalAppliances", connection);
+            electricalAppliancesAdapter = new SqlDataAdapter("select * from ElectricalAppliances", connection);
             electricalAppliancesAdapter.Fill(electricalAppliancesTable);
+            sellElectricalAppliancesAdapter = new SqlDataAdapter("select * from SellElectricalAppliances", connection);
+            sellElectricalAppliancesAdapter.Fill(sellElectricalAppliancesTable);
 
             comboBox1_SelectedIndexChanged(this, null);
         }
@@ -74,6 +86,7 @@ namespace ElectricalApplianceStore
             InitCommands();
             userAdapter.Update(userTable);
             electricalAppliancesAdapter.Update(electricalAppliancesTable);
+            sellElectricalAppliancesAdapter.Update(sellElectricalAppliancesTable);
             ShowTables();
         }
 
@@ -191,6 +204,66 @@ namespace ElectricalApplianceStore
             electricalAppliancesAdapter.InsertCommand = insertCommandE;
             electricalAppliancesAdapter.UpdateCommand = updateCommandE;
             electricalAppliancesAdapter.DeleteCommand = deleteCommandE;
+
+            //Insert SellElectricalAppliances
+            SqlCommand insertCommandS = new SqlCommand("insert into SellElectricalAppliances values (@Name, @DateOfSale, @Price, @Amount, @User_FK, @Type)", connection);
+            insertCommandS.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 50));
+            insertCommandS.Parameters.Add(new SqlParameter("@DateOfSale", SqlDbType.Date));
+            insertCommandS.Parameters.Add(new SqlParameter("@Price", SqlDbType.Float, 50));
+            insertCommandS.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Int));
+            insertCommandS.Parameters.Add(new SqlParameter("@User_FK", SqlDbType.Int));
+            insertCommandS.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 30));
+
+            insertCommandS.Parameters["@Name"].SourceVersion = DataRowVersion.Current;
+            insertCommandS.Parameters["@DateOfSale"].SourceVersion = DataRowVersion.Current;
+            insertCommandS.Parameters["@Price"].SourceVersion = DataRowVersion.Current;
+            insertCommandS.Parameters["@Amount"].SourceVersion = DataRowVersion.Current;
+            insertCommandS.Parameters["@User_FK"].SourceVersion = DataRowVersion.Current;
+            insertCommandS.Parameters["@Type"].SourceVersion = DataRowVersion.Current;
+
+            insertCommandS.Parameters["@Name"].SourceColumn = "Name";
+            insertCommandS.Parameters["@DateOfSale"].SourceColumn = "DateOfSale";
+            insertCommandS.Parameters["@Price"].SourceColumn = "Price";
+            insertCommandS.Parameters["@Amount"].SourceColumn = "Amount";
+            insertCommandS.Parameters["@User_FK"].SourceColumn = "User_FK";
+            insertCommandS.Parameters["@Type"].SourceColumn = "Type";
+
+            //Update SellElectricalAppliances
+            SqlCommand updateCommandS = new SqlCommand("update SellElectricalAppliances set Name = @Name, DateOfSale = @DateOfSale, " +
+                "Price = @Price, Amount = @Amount, set User_FK = @User_FK, Type = @Type where Id = @Id", connection);
+            updateCommandS.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int));
+            updateCommandS.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 50));
+            updateCommandS.Parameters.Add(new SqlParameter("@DateOfSale", SqlDbType.Date));
+            updateCommandS.Parameters.Add(new SqlParameter("@Price", SqlDbType.Float));
+            updateCommandS.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Int));
+            updateCommandS.Parameters.Add(new SqlParameter("@User_FK", SqlDbType.Int));
+            updateCommandS.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 30));
+
+            updateCommandS.Parameters["@Id"].SourceVersion = DataRowVersion.Original;
+            updateCommandS.Parameters["@Name"].SourceVersion = DataRowVersion.Current;
+            updateCommandS.Parameters["@DateOfSale"].SourceVersion = DataRowVersion.Current;
+            updateCommandS.Parameters["@Price"].SourceVersion = DataRowVersion.Current;
+            updateCommandS.Parameters["@Amount"].SourceVersion = DataRowVersion.Current;
+            updateCommandS.Parameters["@User_FK"].SourceVersion = DataRowVersion.Current;
+            updateCommandS.Parameters["@Type"].SourceVersion = DataRowVersion.Current;
+
+            updateCommandS.Parameters["@Id"].SourceColumn = "Id";
+            updateCommandS.Parameters["@Name"].SourceColumn = "Name";
+            updateCommandS.Parameters["@DateOfSale"].SourceColumn = "DateOfSale";
+            updateCommandS.Parameters["@Price"].SourceColumn = "Price";
+            updateCommandS.Parameters["@Amount"].SourceColumn = "Amount";
+            updateCommandS.Parameters["@User_FK"].SourceColumn = "User_FK";
+            updateCommandS.Parameters["@Type"].SourceColumn = "Type";
+
+            //Delete SellElectricalAppliances
+            SqlCommand deleteCommandS = new SqlCommand("delete from SellElectricalAppliances where Id = @Id", connection);
+            deleteCommandS.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int));
+            deleteCommandS.Parameters["@Id"].SourceVersion = DataRowVersion.Original;
+            deleteCommandS.Parameters["@Id"].SourceColumn = "Id";
+
+            sellElectricalAppliancesAdapter.InsertCommand = insertCommandS;
+            sellElectricalAppliancesAdapter.UpdateCommand = updateCommandS;
+            sellElectricalAppliancesAdapter.DeleteCommand = deleteCommandS;
         }
     }
 }

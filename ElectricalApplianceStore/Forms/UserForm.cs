@@ -47,7 +47,8 @@ namespace ElectricalApplianceStore
                 double weight = reader.GetDouble(5);
                 int amount = reader.GetInt32(6);
                 ElectricalApplianceType type = (ElectricalApplianceType)Enum.Parse(typeof(ElectricalApplianceType), reader.GetString(7));
-                electricalAppliances.Add(new ElectricalAppliance(id, name, dateOfRelease, supplier, price, weight, amount, type));
+                if(amount > 0)
+                    electricalAppliances.Add(new ElectricalAppliance(id, name, dateOfRelease, supplier, price, weight, amount, type));
             }
             reader.Close();
             electricalAppliances.ForEach(appliance => electricalAppliances_ListBox.Items.Add(appliance));
@@ -127,15 +128,31 @@ namespace ElectricalApplianceStore
             if (electricalAppliances_ListBox.SelectedIndex == -1)
                 return;
             ElectricalAppliance appliance = (ElectricalAppliance)electricalAppliances_ListBox.SelectedItem;
-            if(appliance.Amount > 0)
+            if (numericUpDown1.Value > appliance.Amount)
             {
-                appliance.Amount--;
+                MessageBox.Show("Такого количества товара нету!!!");
+                return;
+            }
+
+            if (appliance.Amount > 0)
+            {
+                appliance.Amount -= (int)numericUpDown1.Value;
                 new SqlCommand($"update ElectricalAppliances set Amount = {appliance.Amount} where Id = {appliance.Id}", connection).ExecuteNonQuery();
+                new SqlCommand($"insert into SellElectricalAppliances values ('{appliance.Name}', '{DateTime.Now.ToShortDateString()}', {appliance.Price}, {numericUpDown1.Value}, {user.Id}, '{appliance.Type}')", connection).ExecuteNonQuery();
                 ShowElectricalAppliances();
             }
             else
             {
                 MessageBox.Show("Товар отсутствует в магазине!!!");
+            }
+        }
+
+        private void pageTwo_Button_Click(object sender, EventArgs e)
+        {
+            Visible = false;
+            if(new TwoUserForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            {
+                Visible = true;
             }
         }
     }

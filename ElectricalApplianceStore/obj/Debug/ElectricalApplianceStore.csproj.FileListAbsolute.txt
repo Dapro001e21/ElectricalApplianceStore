@@ -13,3 +13,4 @@ D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplia
 D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.SelectiveForm.resources
 D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.UserForm.resources
 D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.AdminForm.resources
+D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.TwoUserForm.resources

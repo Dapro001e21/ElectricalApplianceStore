@@ -42,6 +42,9 @@
             this.show_Button = new System.Windows.Forms.Button();
             this.buy_Button = new System.Windows.Forms.Button();
             this.pageTwo_Button = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // exitAccount_Button
@@ -57,15 +60,15 @@
             // electricalAppliances_ListBox
             // 
             this.electricalAppliances_ListBox.FormattingEnabled = true;
-            this.electricalAppliances_ListBox.Location = new System.Drawing.Point(12, 29);
+            this.electricalAppliances_ListBox.Location = new System.Drawing.Point(12, 30);
             this.electricalAppliances_ListBox.Name = "electricalAppliances_ListBox";
-            this.electricalAppliances_ListBox.Size = new System.Drawing.Size(389, 342);
+            this.electricalAppliances_ListBox.Size = new System.Drawing.Size(389, 355);
             this.electricalAppliances_ListBox.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(13, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 13);
             this.label1.TabIndex = 2;
@@ -77,7 +80,7 @@
             this.type_ComboBox.FormattingEnabled = true;
             this.type_ComboBox.Location = new System.Drawing.Point(407, 30);
             this.type_ComboBox.Name = "type_ComboBox";
-            this.type_ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.type_ComboBox.Size = new System.Drawing.Size(129, 21);
             this.type_ComboBox.TabIndex = 3;
             // 
             // label2
@@ -109,14 +112,14 @@
             "Стоимости"});
             this.sort_ComboBox.Location = new System.Drawing.Point(407, 133);
             this.sort_ComboBox.Name = "sort_ComboBox";
-            this.sort_ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.sort_ComboBox.Size = new System.Drawing.Size(129, 21);
             this.sort_ComboBox.TabIndex = 5;
             // 
             // sort_Button
             // 
             this.sort_Button.Location = new System.Drawing.Point(407, 200);
             this.sort_Button.Name = "sort_Button";
-            this.sort_Button.Size = new System.Drawing.Size(121, 40);
+            this.sort_Button.Size = new System.Drawing.Size(129, 40);
             this.sort_Button.TabIndex = 7;
             this.sort_Button.Text = "Сортировать";
             this.sort_Button.UseVisualStyleBackColor = true;
@@ -131,7 +134,7 @@
             "Убывания"});
             this.order_ComboBox.Location = new System.Drawing.Point(407, 173);
             this.order_ComboBox.Name = "order_ComboBox";
-            this.order_ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.order_ComboBox.Size = new System.Drawing.Size(129, 21);
             this.order_ComboBox.TabIndex = 8;
             // 
             // label4
@@ -145,9 +148,9 @@
             // 
             // updateElectricalAppliance_Button
             // 
-            this.updateElectricalAppliance_Button.Location = new System.Drawing.Point(12, 377);
+            this.updateElectricalAppliance_Button.Location = new System.Drawing.Point(12, 391);
             this.updateElectricalAppliance_Button.Name = "updateElectricalAppliance_Button";
-            this.updateElectricalAppliance_Button.Size = new System.Drawing.Size(185, 38);
+            this.updateElectricalAppliance_Button.Size = new System.Drawing.Size(389, 38);
             this.updateElectricalAppliance_Button.TabIndex = 10;
             this.updateElectricalAppliance_Button.Text = "Обновить лист";
             this.updateElectricalAppliance_Button.UseVisualStyleBackColor = true;
@@ -157,7 +160,7 @@
             // 
             this.show_Button.Location = new System.Drawing.Point(407, 58);
             this.show_Button.Name = "show_Button";
-            this.show_Button.Size = new System.Drawing.Size(121, 36);
+            this.show_Button.Size = new System.Drawing.Size(129, 36);
             this.show_Button.TabIndex = 11;
             this.show_Button.Text = "Показать";
             this.show_Button.UseVisualStyleBackColor = true;
@@ -165,9 +168,9 @@
             // 
             // buy_Button
             // 
-            this.buy_Button.Location = new System.Drawing.Point(203, 377);
+            this.buy_Button.Location = new System.Drawing.Point(407, 315);
             this.buy_Button.Name = "buy_Button";
-            this.buy_Button.Size = new System.Drawing.Size(198, 38);
+            this.buy_Button.Size = new System.Drawing.Size(129, 38);
             this.buy_Button.TabIndex = 12;
             this.buy_Button.Text = "Купить";
             this.buy_Button.UseVisualStyleBackColor = true;
@@ -181,12 +184,41 @@
             this.pageTwo_Button.TabIndex = 13;
             this.pageTwo_Button.Text = "Страница 2";
             this.pageTwo_Button.UseVisualStyleBackColor = true;
+            this.pageTwo_Button.Click += new System.EventHandler(this.pageTwo_Button_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(407, 273);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(113, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Введите количество:";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(407, 289);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(129, 20);
+            this.numericUpDown1.TabIndex = 15;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.pageTwo_Button);
             this.Controls.Add(this.buy_Button);
             this.Controls.Add(this.show_Button);
@@ -203,8 +235,9 @@
             this.Controls.Add(this.exitAccount_Button);
             this.Name = "UserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "UserForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,5 +259,7 @@
         private System.Windows.Forms.Button show_Button;
         private System.Windows.Forms.Button buy_Button;
         private System.Windows.Forms.Button pageTwo_Button;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
