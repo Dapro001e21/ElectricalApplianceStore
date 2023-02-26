@@ -30,8 +30,11 @@ namespace ElectricalApplianceStore
             }
 
             user = Authorization.Sign_Up(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
-            DialogResult = DialogResult.OK;
-            Close();
+            if(user != null)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
         }
     }
 }

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography.cs" />
     <Compile Include="ElectricalAppliance.cs" />
     <Compile Include="Forms\AdminForm.cs">
       <SubType>Form</SubType>

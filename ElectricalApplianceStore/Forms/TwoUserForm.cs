@@ -82,7 +82,7 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where Price > {initialPrice} and Price < {finalPrice}", connection).ExecuteReader();
+                    reader = new SqlCommand($"select * from ElectricalAppliances where Price >= {initialPrice} and Price <= {finalPrice}", connection).ExecuteReader();
                     listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 case 1:
@@ -96,7 +96,7 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where Weight > {initialWeight} and Weight < {finalWeight}", connection).ExecuteReader();
+                    reader = new SqlCommand($"select * from ElectricalAppliances where Weight >= {initialWeight} and Weight <= {finalWeight}", connection).ExecuteReader();
                     listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 case 2:
@@ -111,7 +111,7 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where DateOfRelease > '{initialDate.ToShortDateString()}' and DateOfRelease < '{finalDate.ToShortDateString()}'", connection).ExecuteReader();
+                    reader = new SqlCommand($"select * from ElectricalAppliances where DateOfRelease >= '{initialDate.ToShortDateString()}' and DateOfRelease <= '{finalDate.ToShortDateString()}'", connection).ExecuteReader();
                     listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 case 3:
@@ -125,7 +125,7 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where Amount > {initialAmount} and Amount < {finalAmount}", connection).ExecuteReader();
+                    reader = new SqlCommand($"select * from ElectricalAppliances where Amount >= {initialAmount} and Amount <= {finalAmount}", connection).ExecuteReader();
                     listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 default:

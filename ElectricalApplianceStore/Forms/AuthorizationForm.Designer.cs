@@ -34,13 +34,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.email_TextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.showCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // Sign_Up_Button
             // 
-            this.Sign_Up_Button.Location = new System.Drawing.Point(217, 236);
+            this.Sign_Up_Button.Location = new System.Drawing.Point(291, 213);
             this.Sign_Up_Button.Name = "Sign_Up_Button";
-            this.Sign_Up_Button.Size = new System.Drawing.Size(146, 43);
+            this.Sign_Up_Button.Size = new System.Drawing.Size(151, 43);
             this.Sign_Up_Button.TabIndex = 17;
             this.Sign_Up_Button.Text = "Зарегестрироваться";
             this.Sign_Up_Button.UseVisualStyleBackColor = true;
@@ -48,9 +49,9 @@
             // 
             // Sign_In_Button
             // 
-            this.Sign_In_Button.Location = new System.Drawing.Point(217, 187);
+            this.Sign_In_Button.Location = new System.Drawing.Point(133, 213);
             this.Sign_In_Button.Name = "Sign_In_Button";
-            this.Sign_In_Button.Size = new System.Drawing.Size(146, 43);
+            this.Sign_In_Button.Size = new System.Drawing.Size(152, 43);
             this.Sign_In_Button.TabIndex = 16;
             this.Sign_In_Button.Text = "Войти";
             this.Sign_In_Button.UseVisualStyleBackColor = true;
@@ -60,6 +61,7 @@
             // 
             this.password_TextBox.Location = new System.Drawing.Point(155, 145);
             this.password_TextBox.Name = "password_TextBox";
+            this.password_TextBox.PasswordChar = '●';
             this.password_TextBox.Size = new System.Drawing.Size(273, 20);
             this.password_TextBox.TabIndex = 15;
             // 
@@ -88,11 +90,23 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Введите почту:";
             // 
+            // showCheckBox
+            // 
+            this.showCheckBox.AutoSize = true;
+            this.showCheckBox.Location = new System.Drawing.Point(155, 171);
+            this.showCheckBox.Name = "showCheckBox";
+            this.showCheckBox.Size = new System.Drawing.Size(75, 17);
+            this.showCheckBox.TabIndex = 18;
+            this.showCheckBox.Text = "Показать";
+            this.showCheckBox.UseVisualStyleBackColor = true;
+            this.showCheckBox.CheckedChanged += new System.EventHandler(this.showCheckBox_CheckedChanged);
+            // 
             // AuthorizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.showCheckBox);
             this.Controls.Add(this.Sign_Up_Button);
             this.Controls.Add(this.Sign_In_Button);
             this.Controls.Add(this.password_TextBox);
@@ -115,6 +129,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox email_TextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox showCheckBox;
     }
 }
 

@@ -19,8 +19,6 @@ namespace ElectricalApplianceStore
             InitializeComponent();
             connection = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=ElectricalApplianceStore;Integrated Security=true;MultipleActiveResultSets=True;");
             connection.Open();
-            email_TextBox.Text = "Email";
-            password_TextBox.Text = "Password";
         }
 
         private void Sign_In_Button_Click(object sender, EventArgs e)
@@ -39,10 +37,6 @@ namespace ElectricalApplianceStore
             {
                 Authorization.SwitchingForm(connection, user, this);
             }
-            else
-            {
-                MessageBox.Show("Ошибка в логине или пароле!!!");
-            }
         }
 
         private void Sign_Up_Button_Click(object sender, EventArgs e)
@@ -57,6 +51,14 @@ namespace ElectricalApplianceStore
             {
                 Authorization.SwitchingForm(connection, form.user, this);
             }
+        }
+
+        private void showCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showCheckBox.Checked == true)
+                password_TextBox.PasswordChar = '\0';
+            else
+                password_TextBox.PasswordChar = '●';
         }
     }
 }

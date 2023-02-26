@@ -12,7 +12,7 @@ namespace ElectricalApplianceStore
     {
         public static User Sign_In(SqlConnection connection, string email, string password)
         {
-            SqlCommand selectCommand = new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{password}'", connection);
+            SqlCommand selectCommand = new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{Cryptography.HashPassword(password)}'", connection);
             SqlDataReader reader = selectCommand.ExecuteReader();
             if(reader.Read())
             {
@@ -26,14 +26,25 @@ namespace ElectricalApplianceStore
             }
 
             reader.Close();
+            MessageBox.Show("Ошибка в логине или пароле!!!");
             return null;
         }
 
         public static User Sign_Up(SqlConnection connection, string name, string email, string password)
         {
-            SqlCommand insertCommand = new SqlCommand($"insert into Users values ('{name}', '{email}', '{password}', '{UserType.User}')", connection);
-            insertCommand.ExecuteNonQuery();
+            SqlDataReader checkEmailReader = new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReader();
+            if (!checkEmailReader.Read())
+            {
+                SqlCommand insertCommand = new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection);
+                insertCommand.ExecuteNonQuery();
+            }
+            else
+            {
+                MessageBox.Show("Пользователь с таким email уже существует!!!");
+                return null;
+            }
 
+            MessageBox.Show("Вы успешно зарегестрировались!!!");
             return Sign_In(connection, email, password);
         }
 

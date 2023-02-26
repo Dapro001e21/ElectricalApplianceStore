@@ -58,7 +58,6 @@ namespace ElectricalApplianceStore
         {
             if (sort_ComboBox.SelectedIndex == -1 || order_ComboBox.SelectedIndex == -1)
                 return;
-            ElectricalApplianceType type = (ElectricalApplianceType)type_ComboBox.SelectedItem;
             List<ElectricalAppliance> list = electricalAppliances_ListBox.Items.Cast<ElectricalAppliance>().ToList();
             switch (sort_ComboBox.SelectedIndex)
             {
