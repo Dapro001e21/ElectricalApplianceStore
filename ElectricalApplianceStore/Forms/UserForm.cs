@@ -29,8 +29,9 @@ namespace ElectricalApplianceStore
                 exitAccount_Button.Visible = false;
                 profile_Buton.Visible = false;
             }
-            List<ElectricalApplianceType> electricalApplianceTypes = Enum.GetValues(typeof(ElectricalApplianceType)).Cast<ElectricalApplianceType>().ToList();
-            electricalApplianceTypes.ForEach(type => type_ComboBox.Items.Add(type));
+            type_ComboBox.Items.Add("All");
+            type_ComboBox.Items.AddRange(Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToArray());
+            type_ComboBox.SelectedIndex = 0;
             electricalAppliances = new List<ElectricalAppliance>();
             ShowElectricalAppliances();
         }
@@ -117,10 +118,11 @@ namespace ElectricalApplianceStore
 
         private void show_Button_Click(object sender, EventArgs e)
         {
-            if (type_ComboBox.SelectedIndex == -1)
-                return;
-            ElectricalApplianceType type = (ElectricalApplianceType)type_ComboBox.SelectedItem;
-            List<ElectricalAppliance> list = electricalAppliances.Where(appliance => appliance.Type == type).ToList();
+            List<ElectricalAppliance> list = null;
+            if (type_ComboBox.SelectedItem.ToString() == "All")
+                list = electricalAppliances.ToList();
+            else
+                list = electricalAppliances.Where(appliance => appliance.Type.ToString() == type_ComboBox.SelectedItem.ToString()).ToList();
             electricalAppliances_ListBox.Items.Clear();
             list.ForEach(appliance => electricalAppliances_ListBox.Items.Add(appliance));
         }

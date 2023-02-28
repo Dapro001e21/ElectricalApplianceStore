@@ -35,6 +35,11 @@ namespace ElectricalApplianceStore
             SqlDataReader checkEmailReader = new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReader();
             if (!checkEmailReader.Read())
             {
+                if (password.Length < MINLENGHT)
+                {
+                    MessageBox.Show($"Длина пароля должна быть больше {MINLENGHT} символов!!!");
+                    return null;
+                }
                 new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection).ExecuteNonQuery();
             }
             else

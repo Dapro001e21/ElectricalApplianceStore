@@ -29,12 +29,6 @@ namespace ElectricalApplianceStore
                 return;
             }
 
-            if(password_TextBox.Text.Length < Authorization.MINLENGHT)
-            {
-                MessageBox.Show($"Длина пароля должна быть больше {Authorization.MINLENGHT} символов!!!");
-                return;
-            }
-
             user = Authorization.Sign_Up(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
             if(user != null)
             {
