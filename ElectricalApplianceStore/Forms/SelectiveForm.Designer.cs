@@ -31,11 +31,12 @@
             this.userForm_Button = new System.Windows.Forms.Button();
             this.adminForm_Button = new System.Windows.Forms.Button();
             this.exitAccount_Button = new System.Windows.Forms.Button();
+            this.profileForm_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // userForm_Button
             // 
-            this.userForm_Button.Location = new System.Drawing.Point(12, 29);
+            this.userForm_Button.Location = new System.Drawing.Point(12, 85);
             this.userForm_Button.Name = "userForm_Button";
             this.userForm_Button.Size = new System.Drawing.Size(164, 56);
             this.userForm_Button.TabIndex = 0;
@@ -45,7 +46,7 @@
             // 
             // adminForm_Button
             // 
-            this.adminForm_Button.Location = new System.Drawing.Point(12, 91);
+            this.adminForm_Button.Location = new System.Drawing.Point(12, 147);
             this.adminForm_Button.Name = "adminForm_Button";
             this.adminForm_Button.Size = new System.Drawing.Size(164, 56);
             this.adminForm_Button.TabIndex = 1;
@@ -55,7 +56,7 @@
             // 
             // exitAccount_Button
             // 
-            this.exitAccount_Button.Location = new System.Drawing.Point(12, 153);
+            this.exitAccount_Button.Location = new System.Drawing.Point(12, 209);
             this.exitAccount_Button.Name = "exitAccount_Button";
             this.exitAccount_Button.Size = new System.Drawing.Size(164, 56);
             this.exitAccount_Button.TabIndex = 2;
@@ -63,11 +64,22 @@
             this.exitAccount_Button.UseVisualStyleBackColor = true;
             this.exitAccount_Button.Click += new System.EventHandler(this.exitAccount_Button_Click);
             // 
+            // profileForm_Button
+            // 
+            this.profileForm_Button.Location = new System.Drawing.Point(12, 23);
+            this.profileForm_Button.Name = "profileForm_Button";
+            this.profileForm_Button.Size = new System.Drawing.Size(164, 56);
+            this.profileForm_Button.TabIndex = 3;
+            this.profileForm_Button.Text = "Профиль";
+            this.profileForm_Button.UseVisualStyleBackColor = true;
+            this.profileForm_Button.Click += new System.EventHandler(this.profileForm_Button_Click);
+            // 
             // SelectiveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(191, 225);
+            this.ClientSize = new System.Drawing.Size(191, 276);
+            this.Controls.Add(this.profileForm_Button);
             this.Controls.Add(this.exitAccount_Button);
             this.Controls.Add(this.adminForm_Button);
             this.Controls.Add(this.userForm_Button);
@@ -84,5 +96,6 @@
         private System.Windows.Forms.Button userForm_Button;
         private System.Windows.Forms.Button adminForm_Button;
         private System.Windows.Forms.Button exitAccount_Button;
+        private System.Windows.Forms.Button profileForm_Button;
     }
 }

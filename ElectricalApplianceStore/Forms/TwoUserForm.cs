@@ -22,6 +22,9 @@ namespace ElectricalApplianceStore
             InitializeComponent();
             this.connection = connection;
             this.user = user;
+            type_ComboBox.Items.Add("All");
+            type_ComboBox.Items.AddRange(Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToArray());
+            type_ComboBox.SelectedIndex = 0;
 
             label1.Text = "";
             SqlDataReader maxReader = new SqlCommand("select Type from ElectricalAppliances where Price = (select max(Price) from ElectricalAppliances)", connection).ExecuteReader();
@@ -62,14 +65,14 @@ namespace ElectricalApplianceStore
                 DialogResult = DialogResult.OK;
         }
 
-        private void findPrice_Button_Click(object sender, EventArgs e)
+        private void find_Button_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(initial_TextBox.Text) || string.IsNullOrWhiteSpace(final_TextBox.Text))
                 return;
 
             SqlDataReader reader = null;
             listBox1.Items.Clear();
-            switch (comboBox1.SelectedIndex)
+            switch (search_ComboBox.SelectedIndex)
             {
                 case 0:
                     int initialPrice, finalPrice;
@@ -83,7 +86,6 @@ namespace ElectricalApplianceStore
                     }
 
                     reader = new SqlCommand($"select * from ElectricalAppliances where Price >= {initialPrice} and Price <= {finalPrice}", connection).ExecuteReader();
-                    listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 case 1:
                     int initialWeight, finalWeight;
@@ -97,7 +99,6 @@ namespace ElectricalApplianceStore
                     }
 
                     reader = new SqlCommand($"select * from ElectricalAppliances where Weight >= {initialWeight} and Weight <= {finalWeight}", connection).ExecuteReader();
-                    listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 case 2:
                     DateTime initialDate;
@@ -112,7 +113,6 @@ namespace ElectricalApplianceStore
                     }
 
                     reader = new SqlCommand($"select * from ElectricalAppliances where DateOfRelease >= '{initialDate.ToShortDateString()}' and DateOfRelease <= '{finalDate.ToShortDateString()}'", connection).ExecuteReader();
-                    listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 case 3:
                     int initialAmount, finalAmount;
@@ -126,10 +126,18 @@ namespace ElectricalApplianceStore
                     }
 
                     reader = new SqlCommand($"select * from ElectricalAppliances where Amount >= {initialAmount} and Amount <= {finalAmount}", connection).ExecuteReader();
-                    listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
                     break;
                 default:
                     break;
+            }
+
+            if(type_ComboBox.SelectedIndex == 0)
+            {
+                listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
+            }
+            else
+            {
+                listBox1.Items.AddRange(GetElectricalAppliance(reader).Where(appliance => appliance.Type.ToString() == type_ComboBox.SelectedItem.ToString()).ToArray());
             }
         }
 
@@ -155,7 +163,7 @@ namespace ElectricalApplianceStore
         {
             initial_TextBox.Text = "";
             final_TextBox.Text = "";
-            switch (comboBox1.SelectedIndex)
+            switch (search_ComboBox.SelectedIndex)
             {
                 case 0:
                     initial_Label.Text = "Начальная стоимость:";

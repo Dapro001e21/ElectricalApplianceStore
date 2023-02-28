@@ -35,9 +35,11 @@
             this.initial_Label = new System.Windows.Forms.Label();
             this.final_Label = new System.Windows.Forms.Label();
             this.final_TextBox = new System.Windows.Forms.TextBox();
-            this.findPrice_Button = new System.Windows.Forms.Button();
+            this.find_Button = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.search_ComboBox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.type_ComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // leaveToUserForm_Button
@@ -62,14 +64,14 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.Location = new System.Drawing.Point(15, 95);
+            this.listBox1.Location = new System.Drawing.Point(15, 134);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(283, 160);
             this.listBox1.TabIndex = 16;
             // 
             // initial_TextBox
             // 
-            this.initial_TextBox.Location = new System.Drawing.Point(140, 43);
+            this.initial_TextBox.Location = new System.Drawing.Point(140, 82);
             this.initial_TextBox.Name = "initial_TextBox";
             this.initial_TextBox.Size = new System.Drawing.Size(158, 20);
             this.initial_TextBox.TabIndex = 17;
@@ -77,7 +79,7 @@
             // initial_Label
             // 
             this.initial_Label.AutoSize = true;
-            this.initial_Label.Location = new System.Drawing.Point(12, 46);
+            this.initial_Label.Location = new System.Drawing.Point(12, 85);
             this.initial_Label.Name = "initial_Label";
             this.initial_Label.Size = new System.Drawing.Size(122, 13);
             this.initial_Label.TabIndex = 18;
@@ -86,7 +88,7 @@
             // final_Label
             // 
             this.final_Label.AutoSize = true;
-            this.final_Label.Location = new System.Drawing.Point(12, 72);
+            this.final_Label.Location = new System.Drawing.Point(12, 111);
             this.final_Label.Name = "final_Label";
             this.final_Label.Size = new System.Drawing.Size(115, 13);
             this.final_Label.TabIndex = 20;
@@ -94,20 +96,20 @@
             // 
             // final_TextBox
             // 
-            this.final_TextBox.Location = new System.Drawing.Point(140, 69);
+            this.final_TextBox.Location = new System.Drawing.Point(140, 108);
             this.final_TextBox.Name = "final_TextBox";
             this.final_TextBox.Size = new System.Drawing.Size(158, 20);
             this.final_TextBox.TabIndex = 19;
             // 
-            // findPrice_Button
+            // find_Button
             // 
-            this.findPrice_Button.Location = new System.Drawing.Point(15, 262);
-            this.findPrice_Button.Name = "findPrice_Button";
-            this.findPrice_Button.Size = new System.Drawing.Size(283, 28);
-            this.findPrice_Button.TabIndex = 21;
-            this.findPrice_Button.Text = "Поиск";
-            this.findPrice_Button.UseVisualStyleBackColor = true;
-            this.findPrice_Button.Click += new System.EventHandler(this.findPrice_Button_Click);
+            this.find_Button.Location = new System.Drawing.Point(15, 301);
+            this.find_Button.Name = "find_Button";
+            this.find_Button.Size = new System.Drawing.Size(283, 28);
+            this.find_Button.TabIndex = 21;
+            this.find_Button.Text = "Поиск";
+            this.find_Button.UseVisualStyleBackColor = true;
+            this.find_Button.Click += new System.EventHandler(this.find_Button_Click);
             // 
             // label4
             // 
@@ -118,29 +120,49 @@
             this.label4.TabIndex = 22;
             this.label4.Text = "Поиск:";
             // 
-            // comboBox1
+            // search_ComboBox
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.search_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.search_ComboBox.FormattingEnabled = true;
+            this.search_ComboBox.Items.AddRange(new object[] {
             "По цене",
             "По весу",
             "По дате",
             "По количеству"});
-            this.comboBox1.Location = new System.Drawing.Point(62, 13);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(236, 21);
-            this.comboBox1.TabIndex = 23;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.search_ComboBox.Location = new System.Drawing.Point(62, 13);
+            this.search_ComboBox.Name = "search_ComboBox";
+            this.search_ComboBox.Size = new System.Drawing.Size(236, 21);
+            this.search_ComboBox.TabIndex = 23;
+            this.search_ComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "Тип:";
+            // 
+            // type_ComboBox
+            // 
+            this.type_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.type_ComboBox.FormattingEnabled = true;
+            this.type_ComboBox.Location = new System.Drawing.Point(62, 45);
+            this.type_ComboBox.Name = "type_ComboBox";
+            this.type_ComboBox.Size = new System.Drawing.Size(236, 21);
+            this.type_ComboBox.TabIndex = 25;
             // 
             // TwoUserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.type_ComboBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.search_ComboBox);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.findPrice_Button);
+            this.Controls.Add(this.find_Button);
             this.Controls.Add(this.final_Label);
             this.Controls.Add(this.final_TextBox);
             this.Controls.Add(this.initial_Label);
@@ -166,8 +188,10 @@
         private System.Windows.Forms.Label initial_Label;
         private System.Windows.Forms.Label final_Label;
         private System.Windows.Forms.TextBox final_TextBox;
-        private System.Windows.Forms.Button findPrice_Button;
+        private System.Windows.Forms.Button find_Button;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox search_ComboBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox type_ComboBox;
     }
 }

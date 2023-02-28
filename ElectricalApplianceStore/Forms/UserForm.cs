@@ -25,7 +25,10 @@ namespace ElectricalApplianceStore
             this.user = user;
 
             if (user.Type == UserType.Admin)
+            {
                 exitAccount_Button.Visible = false;
+                profile_Buton.Visible = false;
+            }
             List<ElectricalApplianceType> electricalApplianceTypes = Enum.GetValues(typeof(ElectricalApplianceType)).Cast<ElectricalApplianceType>().ToList();
             electricalApplianceTypes.ForEach(type => type_ComboBox.Items.Add(type));
             electricalAppliances = new List<ElectricalAppliance>();
@@ -150,6 +153,15 @@ namespace ElectricalApplianceStore
         {
             Visible = false;
             if(new TwoUserForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            {
+                Visible = true;
+            }
+        }
+
+        private void profile_Buton_Click(object sender, EventArgs e)
+        {
+            Visible = false;
+            if (new ProfileForm(connection, user).ShowDialog() == DialogResult.Cancel)
             {
                 Visible = true;
             }

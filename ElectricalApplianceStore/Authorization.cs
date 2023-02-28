@@ -10,10 +10,10 @@ namespace ElectricalApplianceStore
 {
     public class Authorization
     {
+        public const int MINLENGHT = 5;
         public static User Sign_In(SqlConnection connection, string email, string password)
         {
-            SqlCommand selectCommand = new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{Cryptography.HashPassword(password)}'", connection);
-            SqlDataReader reader = selectCommand.ExecuteReader();
+            SqlDataReader reader = new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{Cryptography.HashPassword(password)}'", connection).ExecuteReader();
             if(reader.Read())
             {
                 int Id = reader.GetInt32(0);
@@ -35,8 +35,7 @@ namespace ElectricalApplianceStore
             SqlDataReader checkEmailReader = new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReader();
             if (!checkEmailReader.Read())
             {
-                SqlCommand insertCommand = new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection);
-                insertCommand.ExecuteNonQuery();
+                new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection).ExecuteNonQuery();
             }
             else
             {

@@ -53,5 +53,14 @@ namespace ElectricalApplianceStore
             isExit = false;
             Close();
         }
+
+        private void profileForm_Button_Click(object sender, EventArgs e)
+        {
+            Visible = false;
+            if (new ProfileForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            {
+                Visible = true;
+            }
+        }
     }
 }

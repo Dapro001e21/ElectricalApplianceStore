@@ -9,10 +9,10 @@ namespace ElectricalApplianceStore
 {
     public class Cryptography
     {
-        public static string HashPassword(string s)
+        public static string HashPassword(string str)
         {
             MD5 md5 = MD5.Create();
-            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(s));
+            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(str));
 
             StringBuilder sb = new StringBuilder();
             foreach (byte item in hash)
