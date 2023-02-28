@@ -36,7 +36,7 @@
             // 
             // userForm_Button
             // 
-            this.userForm_Button.Location = new System.Drawing.Point(12, 85);
+            this.userForm_Button.Location = new System.Drawing.Point(12, 74);
             this.userForm_Button.Name = "userForm_Button";
             this.userForm_Button.Size = new System.Drawing.Size(164, 56);
             this.userForm_Button.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // adminForm_Button
             // 
-            this.adminForm_Button.Location = new System.Drawing.Point(12, 147);
+            this.adminForm_Button.Location = new System.Drawing.Point(12, 136);
             this.adminForm_Button.Name = "adminForm_Button";
             this.adminForm_Button.Size = new System.Drawing.Size(164, 56);
             this.adminForm_Button.TabIndex = 1;
@@ -56,7 +56,7 @@
             // 
             // exitAccount_Button
             // 
-            this.exitAccount_Button.Location = new System.Drawing.Point(12, 209);
+            this.exitAccount_Button.Location = new System.Drawing.Point(12, 198);
             this.exitAccount_Button.Name = "exitAccount_Button";
             this.exitAccount_Button.Size = new System.Drawing.Size(164, 56);
             this.exitAccount_Button.TabIndex = 2;
@@ -66,7 +66,7 @@
             // 
             // profileForm_Button
             // 
-            this.profileForm_Button.Location = new System.Drawing.Point(12, 23);
+            this.profileForm_Button.Location = new System.Drawing.Point(12, 12);
             this.profileForm_Button.Name = "profileForm_Button";
             this.profileForm_Button.Size = new System.Drawing.Size(164, 56);
             this.profileForm_Button.TabIndex = 3;
@@ -78,7 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(191, 276);
+            this.ClientSize = new System.Drawing.Size(191, 266);
             this.Controls.Add(this.profileForm_Button);
             this.Controls.Add(this.exitAccount_Button);
             this.Controls.Add(this.adminForm_Button);

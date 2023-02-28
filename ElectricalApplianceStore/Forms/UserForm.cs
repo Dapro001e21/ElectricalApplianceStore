@@ -111,7 +111,7 @@ namespace ElectricalApplianceStore
         private void updateElectricalAppliance_Button_Click(object sender, EventArgs e)
         {
             ShowElectricalAppliances();
-            type_ComboBox.SelectedIndex = -1;
+            type_ComboBox.SelectedIndex = 0;
             sort_ComboBox.SelectedIndex = -1;
             order_ComboBox.SelectedIndex = -1;
         }

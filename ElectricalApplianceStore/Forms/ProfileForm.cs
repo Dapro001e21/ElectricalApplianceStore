@@ -45,7 +45,7 @@ namespace ElectricalApplianceStore
                 }
             }
 
-            if(Cryptography.HashPassword(newPassword_TextBox.Text) != user.Password && newPassword_TextBox.Text.Length >= Authorization.MINLENGHT && !string.IsNullOrWhiteSpace(email_textBox.Text))
+            if(Cryptography.HashPassword(newPassword_TextBox.Text) != user.Password && newPassword_TextBox.Text.Length >= Authorization.MINLENGHT && !string.IsNullOrWhiteSpace(newPassword_TextBox.Text))
             {
                 new SqlCommand($"update Users set Password = '{Cryptography.HashPassword(newPassword_TextBox.Text)}' where Id = {user.Id}", connection).ExecuteNonQuery();
                 label5.Enabled = false;
@@ -59,7 +59,7 @@ namespace ElectricalApplianceStore
             else if(Cryptography.HashPassword(newPassword_TextBox.Text) == user.Password)
             {
                 MessageBox.Show("Пароль не должен совпадать с предыдущим!!!");
-            }else if(newPassword_TextBox.Enabled && newPassword_TextBox.Text.Length < Authorization.MINLENGHT)
+            }else if(newPassword_TextBox.Enabled && newPassword_TextBox.Text.Length < Authorization.MINLENGHT && !string.IsNullOrWhiteSpace(newPassword_TextBox.Text))
             {
                 MessageBox.Show($"Длина пароля должна быть больше {Authorization.MINLENGHT} символов!!!");
             }
