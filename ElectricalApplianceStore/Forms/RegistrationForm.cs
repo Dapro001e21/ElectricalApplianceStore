@@ -21,7 +21,7 @@ namespace ElectricalApplianceStore
             this.connection = connection;
         }
 
-        private void registration_Button_Click(object sender, EventArgs e)
+        private async void registration_Button_Click(object sender, EventArgs e)
         {
             if(string.IsNullOrWhiteSpace(name_TextBox.Text) || string.IsNullOrWhiteSpace(email_TextBox.Text) || string.IsNullOrWhiteSpace(password_TextBox.Text))
             {
@@ -29,12 +29,20 @@ namespace ElectricalApplianceStore
                 return;
             }
 
-            user = Authorization.Sign_Up(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
+            user = await Authorization.Sign_UpAsync(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
             if(user != null)
             {
                 DialogResult = DialogResult.OK;
                 Close();
             }
+        }
+
+        private void password_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (password_CheckBox.Checked == true)
+                password_TextBox.PasswordChar = '\0';
+            else
+                password_TextBox.PasswordChar = '●';
         }
     }
 }

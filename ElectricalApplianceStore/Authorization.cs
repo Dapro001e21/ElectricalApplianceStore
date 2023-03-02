@@ -11,10 +11,10 @@ namespace ElectricalApplianceStore
     public class Authorization
     {
         public const int MINLENGHT = 5;
-        public static User Sign_In(SqlConnection connection, string email, string password)
+        public static async Task<User> Sign_InAsync(SqlConnection connection, string email, string password)
         {
-            SqlDataReader reader = new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{Cryptography.HashPassword(password)}'", connection).ExecuteReader();
-            if(reader.Read())
+            SqlDataReader reader = await new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{Cryptography.HashPassword(password)}'", connection).ExecuteReaderAsync();
+            if(await reader.ReadAsync())
             {
                 int Id = reader.GetInt32(0);
                 string Name = reader.GetString(1);
@@ -30,17 +30,17 @@ namespace ElectricalApplianceStore
             return null;
         }
 
-        public static User Sign_Up(SqlConnection connection, string name, string email, string password)
+        public static async Task<User> Sign_UpAsync(SqlConnection connection, string name, string email, string password)
         {
-            SqlDataReader checkEmailReader = new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReader();
-            if (!checkEmailReader.Read())
+            SqlDataReader checkEmailReader = await new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReaderAsync();
+            if (!await checkEmailReader.ReadAsync())
             {
                 if (password.Length < MINLENGHT)
                 {
                     MessageBox.Show($"Длина пароля должна быть больше {MINLENGHT} символов!!!");
                     return null;
                 }
-                new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection).ExecuteNonQuery();
+                await new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection).ExecuteNonQueryAsync();
             }
             else
             {
@@ -49,7 +49,8 @@ namespace ElectricalApplianceStore
             }
 
             MessageBox.Show("Вы успешно зарегестрировались!!!");
-            return Sign_In(connection, email, password);
+            await Email.SendEmailAsync(email, "Success", "Вы успешно зарегестрировались!!!");
+            return await Sign_InAsync(connection, email, password);
         }
 
         public static void SwitchingForm(SqlConnection connection, User user, Form parentForm)

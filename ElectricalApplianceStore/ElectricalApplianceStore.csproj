@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Cryptography.cs" />
     <Compile Include="ElectricalAppliance.cs" />
+    <Compile Include="Email.cs" />
     <Compile Include="Forms\AdminForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -24,11 +24,13 @@ namespace ElectricalApplianceStore
             email_textBox.Text = user.Email;
         }
 
-        private void save_Button_Click(object sender, EventArgs e)
+        private async void save_Button_Click(object sender, EventArgs e)
         {
+            bool isUpdate = false;
             if(name_TextBox.Text != user.Name && !string.IsNullOrWhiteSpace(email_textBox.Text))
             {
                 new SqlCommand($"update Users set Name = '{name_TextBox.Text}' where Id = {user.Id}", connection).ExecuteNonQuery();
+                isUpdate = true;
             }
 
             if(email_textBox.Text != user.Email && !string.IsNullOrWhiteSpace(email_textBox.Text))
@@ -37,17 +39,20 @@ namespace ElectricalApplianceStore
                 if (!checkEmailReader.Read())
                 {
                     new SqlCommand($"update Users set Email = '{email_textBox.Text}' where Id = {user.Id}", connection).ExecuteNonQuery();
+                    await Email.SendEmailAsync(email_textBox.Text, "Success", "Почта успешна изменена!!!");
                 }
                 else
                 {
                     MessageBox.Show("Пользователь с таким email уже существует!!!");
                     return;
                 }
+                isUpdate = true;
             }
 
             if(Cryptography.HashPassword(newPassword_TextBox.Text) != user.Password && newPassword_TextBox.Text.Length >= Authorization.MINLENGHT && !string.IsNullOrWhiteSpace(newPassword_TextBox.Text))
             {
                 new SqlCommand($"update Users set Password = '{Cryptography.HashPassword(newPassword_TextBox.Text)}' where Id = {user.Id}", connection).ExecuteNonQuery();
+                await Email.SendEmailAsync(email_textBox.Text, "Success", "Пароль успешно изменён!!!");
                 label5.Enabled = false;
                 newPassword_TextBox.Enabled = false;
                 newPassword_CheckBox.Enabled = false;
@@ -55,6 +60,7 @@ namespace ElectricalApplianceStore
                 newPassword_CheckBox.Checked = false;
                 password_TextBox.Text = "";
                 password_CheckBox.Checked = false;
+                isUpdate = true;
             }
             else if(Cryptography.HashPassword(newPassword_TextBox.Text) == user.Password)
             {
@@ -64,7 +70,11 @@ namespace ElectricalApplianceStore
                 MessageBox.Show($"Длина пароля должна быть больше {Authorization.MINLENGHT} символов!!!");
             }
 
-            UpdateUser(user.Id);
+            if (isUpdate)
+            {
+                MessageBox.Show("Данные успешно сохранены!!!");
+                UpdateUser(user.Id);
+            }
         }
 
         private void UpdateUser(int id)

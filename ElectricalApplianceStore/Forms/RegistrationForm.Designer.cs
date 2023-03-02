@@ -35,6 +35,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.password_TextBox = new System.Windows.Forms.TextBox();
             this.registration_Button = new System.Windows.Forms.Button();
+            this.password_CheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // name_TextBox
@@ -82,7 +83,8 @@
             // 
             this.password_TextBox.Location = new System.Drawing.Point(12, 118);
             this.password_TextBox.Name = "password_TextBox";
-            this.password_TextBox.Size = new System.Drawing.Size(181, 20);
+            this.password_TextBox.PasswordChar = '●';
+            this.password_TextBox.Size = new System.Drawing.Size(160, 20);
             this.password_TextBox.TabIndex = 4;
             // 
             // registration_Button
@@ -95,11 +97,22 @@
             this.registration_Button.UseVisualStyleBackColor = true;
             this.registration_Button.Click += new System.EventHandler(this.registration_Button_Click);
             // 
+            // password_CheckBox
+            // 
+            this.password_CheckBox.AutoSize = true;
+            this.password_CheckBox.Location = new System.Drawing.Point(178, 121);
+            this.password_CheckBox.Name = "password_CheckBox";
+            this.password_CheckBox.Size = new System.Drawing.Size(15, 14);
+            this.password_CheckBox.TabIndex = 7;
+            this.password_CheckBox.UseVisualStyleBackColor = true;
+            this.password_CheckBox.CheckedChanged += new System.EventHandler(this.password_CheckBox_CheckedChanged);
+            // 
             // RegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(210, 215);
+            this.Controls.Add(this.password_CheckBox);
             this.Controls.Add(this.registration_Button);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.password_TextBox);
@@ -124,5 +137,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox password_TextBox;
         private System.Windows.Forms.Button registration_Button;
+        private System.Windows.Forms.CheckBox password_CheckBox;
     }
 }

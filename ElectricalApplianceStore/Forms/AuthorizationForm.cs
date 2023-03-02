@@ -21,7 +21,7 @@ namespace ElectricalApplianceStore
             connection.Open();
         }
 
-        private void Sign_In_Button_Click(object sender, EventArgs e)
+        private async void Sign_In_Button_Click(object sender, EventArgs e)
         {
             if(string.IsNullOrWhiteSpace(email_TextBox.Text) && string.IsNullOrWhiteSpace(password_TextBox.Text))
             {
@@ -29,7 +29,7 @@ namespace ElectricalApplianceStore
                 return;
             }
 
-            User user = Authorization.Sign_In(connection, email_TextBox.Text, password_TextBox.Text);
+            User user = await Authorization.Sign_InAsync(connection, email_TextBox.Text, password_TextBox.Text);
             email_TextBox.Text = "";
             password_TextBox.Text = "";
 
