@@ -36,6 +36,9 @@
             this.password_TextBox = new System.Windows.Forms.TextBox();
             this.registration_Button = new System.Windows.Forms.Button();
             this.password_CheckBox = new System.Windows.Forms.CheckBox();
+            this.twoPassword_CheckBox = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.twoPassword_TextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // name_TextBox
@@ -89,7 +92,7 @@
             // 
             // registration_Button
             // 
-            this.registration_Button.Location = new System.Drawing.Point(13, 157);
+            this.registration_Button.Location = new System.Drawing.Point(12, 196);
             this.registration_Button.Name = "registration_Button";
             this.registration_Button.Size = new System.Drawing.Size(180, 42);
             this.registration_Button.TabIndex = 6;
@@ -107,11 +110,41 @@
             this.password_CheckBox.UseVisualStyleBackColor = true;
             this.password_CheckBox.CheckedChanged += new System.EventHandler(this.password_CheckBox_CheckedChanged);
             // 
+            // twoPassword_CheckBox
+            // 
+            this.twoPassword_CheckBox.AutoSize = true;
+            this.twoPassword_CheckBox.Location = new System.Drawing.Point(178, 160);
+            this.twoPassword_CheckBox.Name = "twoPassword_CheckBox";
+            this.twoPassword_CheckBox.Size = new System.Drawing.Size(15, 14);
+            this.twoPassword_CheckBox.TabIndex = 10;
+            this.twoPassword_CheckBox.UseVisualStyleBackColor = true;
+            this.twoPassword_CheckBox.CheckedChanged += new System.EventHandler(this.twoPassword_CheckBox_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 144);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(115, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Подтвердите пароль:";
+            // 
+            // twoPassword_TextBox
+            // 
+            this.twoPassword_TextBox.Location = new System.Drawing.Point(12, 160);
+            this.twoPassword_TextBox.Name = "twoPassword_TextBox";
+            this.twoPassword_TextBox.PasswordChar = '●';
+            this.twoPassword_TextBox.Size = new System.Drawing.Size(160, 20);
+            this.twoPassword_TextBox.TabIndex = 8;
+            // 
             // RegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(210, 215);
+            this.ClientSize = new System.Drawing.Size(210, 244);
+            this.Controls.Add(this.twoPassword_CheckBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.twoPassword_TextBox);
             this.Controls.Add(this.password_CheckBox);
             this.Controls.Add(this.registration_Button);
             this.Controls.Add(this.label3);
@@ -138,5 +171,8 @@
         private System.Windows.Forms.TextBox password_TextBox;
         private System.Windows.Forms.Button registration_Button;
         private System.Windows.Forms.CheckBox password_CheckBox;
+        private System.Windows.Forms.CheckBox twoPassword_CheckBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox twoPassword_TextBox;
     }
 }

@@ -35,6 +35,7 @@
             this.email_TextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.showCheckBox = new System.Windows.Forms.CheckBox();
+            this.resetPassword_LinkLabel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // Sign_Up_Button
@@ -62,7 +63,7 @@
             this.password_TextBox.Location = new System.Drawing.Point(155, 145);
             this.password_TextBox.Name = "password_TextBox";
             this.password_TextBox.PasswordChar = '●';
-            this.password_TextBox.Size = new System.Drawing.Size(273, 20);
+            this.password_TextBox.Size = new System.Drawing.Size(252, 20);
             this.password_TextBox.TabIndex = 15;
             // 
             // label2
@@ -93,19 +94,30 @@
             // showCheckBox
             // 
             this.showCheckBox.AutoSize = true;
-            this.showCheckBox.Location = new System.Drawing.Point(155, 171);
+            this.showCheckBox.Location = new System.Drawing.Point(413, 148);
             this.showCheckBox.Name = "showCheckBox";
-            this.showCheckBox.Size = new System.Drawing.Size(75, 17);
+            this.showCheckBox.Size = new System.Drawing.Size(15, 14);
             this.showCheckBox.TabIndex = 18;
-            this.showCheckBox.Text = "Показать";
             this.showCheckBox.UseVisualStyleBackColor = true;
             this.showCheckBox.CheckedChanged += new System.EventHandler(this.showCheckBox_CheckedChanged);
+            // 
+            // resetPassword_LinkLabel
+            // 
+            this.resetPassword_LinkLabel.AutoSize = true;
+            this.resetPassword_LinkLabel.Location = new System.Drawing.Point(155, 172);
+            this.resetPassword_LinkLabel.Name = "resetPassword_LinkLabel";
+            this.resetPassword_LinkLabel.Size = new System.Drawing.Size(91, 13);
+            this.resetPassword_LinkLabel.TabIndex = 19;
+            this.resetPassword_LinkLabel.TabStop = true;
+            this.resetPassword_LinkLabel.Text = "Забыли пароль?";
+            this.resetPassword_LinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.resetPassword_LinkLabel_LinkClicked);
             // 
             // AuthorizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.resetPassword_LinkLabel);
             this.Controls.Add(this.showCheckBox);
             this.Controls.Add(this.Sign_Up_Button);
             this.Controls.Add(this.Sign_In_Button);
@@ -130,6 +142,7 @@
         private System.Windows.Forms.TextBox email_TextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox showCheckBox;
+        private System.Windows.Forms.LinkLabel resetPassword_LinkLabel;
     }
 }
 

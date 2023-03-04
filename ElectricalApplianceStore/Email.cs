@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -17,13 +18,34 @@ namespace ElectricalApplianceStore
         {
             MailAddress from = new MailAddress(EMAIL, "ElectricalApplianceStore");
             MailAddress to = new MailAddress(toMailAdress);
-            MailMessage m = new MailMessage(from, to);
-            m.Subject = subject;
-            m.Body = body;
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = subject;
+            message.Body = body;
             SmtpClient smtp = new SmtpClient("smtp.yandex.ru", 587);
             smtp.Credentials = new NetworkCredential(EMAIL, PASSWORD);
             smtp.EnableSsl = true;
-            await smtp.SendMailAsync(m);
+            await smtp.SendMailAsync(message);
+        }
+
+        public static async Task<bool> IsEmailExistsAsync(SqlConnection connection, string email)
+        {
+            SqlDataReader checkEmailReader = await new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReaderAsync();
+            if (await checkEmailReader.ReadAsync())
+                return true;
+            return false;
+        }
+
+        public static bool IsValidEmail(string email)
+        {
+            try
+            {
+                MailAddress addr = new MailAddress(email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

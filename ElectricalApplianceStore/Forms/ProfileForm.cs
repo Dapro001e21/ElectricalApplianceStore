@@ -21,25 +21,24 @@ namespace ElectricalApplianceStore
             this.connection = connection;
             this.user = user;
             name_TextBox.Text = user.Name;
-            email_textBox.Text = user.Email;
+            email_TextBox.Text = user.Email;
         }
 
         private async void save_Button_Click(object sender, EventArgs e)
         {
             bool isUpdate = false;
-            if(name_TextBox.Text != user.Name && !string.IsNullOrWhiteSpace(email_textBox.Text))
+            if(name_TextBox.Text != user.Name && !string.IsNullOrWhiteSpace(email_TextBox.Text))
             {
                 new SqlCommand($"update Users set Name = '{name_TextBox.Text}' where Id = {user.Id}", connection).ExecuteNonQuery();
                 isUpdate = true;
             }
 
-            if(email_textBox.Text != user.Email && !string.IsNullOrWhiteSpace(email_textBox.Text))
+            if(email_TextBox.Text != user.Email && !string.IsNullOrWhiteSpace(email_TextBox.Text))
             {
-                SqlDataReader checkEmailReader = new SqlCommand($"select * from Users where Email = '{email_textBox.Text}'", connection).ExecuteReader();
-                if (!checkEmailReader.Read())
+                if (!Email.IsEmailExistsAsync(connection, email_TextBox.Text).Result)
                 {
-                    new SqlCommand($"update Users set Email = '{email_textBox.Text}' where Id = {user.Id}", connection).ExecuteNonQuery();
-                    await Email.SendEmailAsync(email_textBox.Text, "Success", "Почта успешна изменена!!!");
+                    new SqlCommand($"update Users set Email = '{email_TextBox.Text}' where Id = {user.Id}", connection).ExecuteNonQuery();
+                    await Email.SendEmailAsync(email_TextBox.Text, "Success", "Почта успешна изменена!!!");
                 }
                 else
                 {
@@ -52,7 +51,7 @@ namespace ElectricalApplianceStore
             if(Cryptography.HashPassword(newPassword_TextBox.Text) != user.Password && newPassword_TextBox.Text.Length >= Authorization.MINLENGHT && !string.IsNullOrWhiteSpace(newPassword_TextBox.Text))
             {
                 new SqlCommand($"update Users set Password = '{Cryptography.HashPassword(newPassword_TextBox.Text)}' where Id = {user.Id}", connection).ExecuteNonQuery();
-                await Email.SendEmailAsync(email_textBox.Text, "Success", "Пароль успешно изменён!!!");
+                await Email.SendEmailAsync(email_TextBox.Text, "Success", "Пароль успешно изменён!!!");
                 label5.Enabled = false;
                 newPassword_TextBox.Enabled = false;
                 newPassword_CheckBox.Enabled = false;

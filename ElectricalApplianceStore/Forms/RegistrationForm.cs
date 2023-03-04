@@ -28,6 +28,11 @@ namespace ElectricalApplianceStore
                 MessageBox.Show("Заполните все поля!");
                 return;
             }
+            if(password_TextBox.Text != twoPassword_TextBox.Text)
+            {
+                MessageBox.Show("Пароли должны совпадать!!!");
+                return;
+            }
 
             user = await Authorization.Sign_UpAsync(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
             if(user != null)
@@ -43,6 +48,14 @@ namespace ElectricalApplianceStore
                 password_TextBox.PasswordChar = '\0';
             else
                 password_TextBox.PasswordChar = '●';
+        }
+
+        private void twoPassword_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (twoPassword_CheckBox.Checked == true)
+                twoPassword_TextBox.PasswordChar = '\0';
+            else
+                twoPassword_TextBox.PasswordChar = '●';
         }
     }
 }

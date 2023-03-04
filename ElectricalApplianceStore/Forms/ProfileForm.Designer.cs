@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.name_TextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.email_textBox = new System.Windows.Forms.TextBox();
+            this.email_TextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.password_TextBox = new System.Windows.Forms.TextBox();
             this.save_Button = new System.Windows.Forms.Button();
@@ -67,12 +67,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Почта:";
             // 
-            // email_textBox
+            // email_TextBox
             // 
-            this.email_textBox.Location = new System.Drawing.Point(66, 43);
-            this.email_textBox.Name = "email_textBox";
-            this.email_textBox.Size = new System.Drawing.Size(149, 20);
-            this.email_textBox.TabIndex = 3;
+            this.email_TextBox.Location = new System.Drawing.Point(66, 43);
+            this.email_TextBox.Name = "email_TextBox";
+            this.email_TextBox.Size = new System.Drawing.Size(149, 20);
+            this.email_TextBox.TabIndex = 3;
             // 
             // label3
             // 
@@ -164,7 +164,7 @@
             this.Controls.Add(this.save_Button);
             this.Controls.Add(this.password_TextBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.email_textBox);
+            this.Controls.Add(this.email_TextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.name_TextBox);
             this.Controls.Add(this.label1);
@@ -181,7 +181,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox name_TextBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox email_textBox;
+        private System.Windows.Forms.TextBox email_TextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox password_TextBox;
         private System.Windows.Forms.Button save_Button;

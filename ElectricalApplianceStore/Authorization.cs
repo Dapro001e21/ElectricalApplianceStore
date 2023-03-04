@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -32,15 +33,18 @@ namespace ElectricalApplianceStore
 
         public static async Task<User> Sign_UpAsync(SqlConnection connection, string name, string email, string password)
         {
-            SqlDataReader checkEmailReader = await new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReaderAsync();
-            if (!await checkEmailReader.ReadAsync())
+            if (!await Email.IsEmailExistsAsync(connection, email) && Email.IsValidEmail(email) && password.Length >= MINLENGHT)
             {
-                if (password.Length < MINLENGHT)
-                {
-                    MessageBox.Show($"Длина пароля должна быть больше {MINLENGHT} символов!!!");
-                    return null;
-                }
                 await new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection).ExecuteNonQueryAsync();
+            }else if (password.Length < MINLENGHT)
+            {
+                MessageBox.Show($"Длина пароля должна быть больше {MINLENGHT} символов!!!");
+                return null;
+            }
+            else if(!Email.IsValidEmail(email))
+            {
+                MessageBox.Show("Введите правильную почту!!!");
+                return null;
             }
             else
             {

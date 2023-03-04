@@ -60,5 +60,14 @@ namespace ElectricalApplianceStore
             else
                 password_TextBox.PasswordChar = '●';
         }
+
+        private void resetPassword_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Visible = false;
+            if(new ResetPasswordForm(connection).ShowDialog() == DialogResult.Cancel)
+            {
+                Visible = true;
+            }
+        }
     }
 }

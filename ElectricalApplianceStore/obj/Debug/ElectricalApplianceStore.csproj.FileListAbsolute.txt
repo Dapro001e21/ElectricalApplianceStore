@@ -15,3 +15,4 @@ D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplia
 D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.AdminForm.resources
 D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.TwoUserForm.resources
 D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.ProfileForm.resources
+D:\Projects\Visual Studios Projects\C#\ElectricalApplianceStore\ElectricalApplianceStore\obj\Debug\ElectricalApplianceStore.ResetPasswordForm.resources
