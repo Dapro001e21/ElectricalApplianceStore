@@ -28,9 +28,6 @@ namespace ElectricalApplianceStore
             }
 
             User user = await Authorization.Sign_InAsync(email_TextBox.Text, password_TextBox.Text);
-            email_TextBox.Text = "";
-            password_TextBox.Text = "";
-
             if(user != null)
             {
                 Authorization.SwitchingForm(user, this);

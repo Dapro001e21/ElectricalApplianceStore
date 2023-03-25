@@ -35,49 +35,48 @@ namespace ElectricalApplianceStore
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            if (userTable.Columns.Count == 0 || electricalAppliancesTable.Columns.Count == 0 || sellElectricalAppliancesTable.Columns.Count == 0)
+                return;
+
+            type_Label.Text = "Type:\n";
+            List<string> typeName = null;
+            dataGridView1.DataSource = null;
+            switch (comboBox1.SelectedIndex)
             {
-                type_Label.Text = "Type:\n";
-                List<string> typeName = null;
-                dataGridView1.DataSource = null;
-                switch (comboBox1.SelectedIndex)
-                {
-                    case 0:
-                        typeName = Enum.GetNames(typeof(UserType)).Cast<string>().ToList();
-                        for (int i = 0; i < typeName.Count; i++)
-                        {
-                            type_Label.Text += $"{i + 1}) {typeName[i]}\n";
-                        }
-                        dataGridView1.DataSource = userTable;
-                        break;
-                    case 1:
-                        typeName = Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToList();
-                        for (int i = 0; i < typeName.Count; i++)
-                        {
-                            type_Label.Text += $"{i + 1}) {typeName[i]}\n";
-                        }
-                        dataGridView1.DataSource = electricalAppliancesTable;
-                        break;
-                    case 2:
-                        typeName = Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToList();
-                        for (int i = 0; i < typeName.Count; i++)
-                        {
-                            type_Label.Text += $"{i + 1}) {typeName[i]}\n";
-                        }
-                        dataGridView1.DataSource = sellElectricalAppliancesTable;
-                        break;
-                    default:
-                        break;
-                }
-                dataGridView1.Columns.Remove("Type");
-                DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
-                comboBoxColumn.DataSource = typeName;
-                comboBoxColumn.HeaderText = "Type";
-                comboBoxColumn.DataPropertyName = "Type";
-                dataGridView1.Columns.Add(comboBoxColumn);
-                dataGridView1.Columns["Id"].ReadOnly = true;
+                case 0:
+                    typeName = Enum.GetNames(typeof(UserType)).Cast<string>().ToList();
+                    for (int i = 0; i < typeName.Count; i++)
+                    {
+                        type_Label.Text += $"{i + 1}) {typeName[i]}\n";
+                    }
+                    dataGridView1.DataSource = userTable;
+                    break;
+                case 1:
+                    typeName = Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToList();
+                    for (int i = 0; i < typeName.Count; i++)
+                    {
+                        type_Label.Text += $"{i + 1}) {typeName[i]}\n";
+                    }
+                    dataGridView1.DataSource = electricalAppliancesTable;
+                    break;
+                case 2:
+                    typeName = Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToList();
+                    for (int i = 0; i < typeName.Count; i++)
+                    {
+                        type_Label.Text += $"{i + 1}) {typeName[i]}\n";
+                    }
+                    dataGridView1.DataSource = sellElectricalAppliancesTable;
+                    break;
+                default:
+                    break;
             }
-            catch (Exception) { }
+            dataGridView1.Columns.Remove("Type");
+            DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
+            comboBoxColumn.DataSource = typeName;
+            comboBoxColumn.HeaderText = "Type";
+            comboBoxColumn.DataPropertyName = "Type";
+            dataGridView1.Columns.Add(comboBoxColumn);
+            dataGridView1.Columns["Id"].ReadOnly = true;
         }
 
         private void ShowTables()
