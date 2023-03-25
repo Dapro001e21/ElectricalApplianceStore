@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\ElectricalApplianceService.cs" />
+    <Compile Include="Services\ResetPasswordService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="SqlDataBase.cs" />
     <Compile Include="Cryptography.cs" />
     <Compile Include="ElectricalAppliance.cs" />
     <Compile Include="Email.cs" />
@@ -147,5 +151,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

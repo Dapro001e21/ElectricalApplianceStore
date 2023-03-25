@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectricalApplianceStore.Services;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace ElectricalApplianceStore
     public class Authorization
     {
         public const int MINLENGHT = 5;
-        public static async Task<User> Sign_InAsync(SqlConnection connection, string email, string password)
+        public static async Task<User> Sign_InAsync(string email, string password)
         {
-            SqlDataReader reader = await new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{Cryptography.HashPassword(password)}'", connection).ExecuteReaderAsync();
+            SqlDataReader reader = await new SqlCommand($"select * from Users where Users.Email='{email}' and Users.Password='{Cryptography.HashPassword(password)}'", SqlDataBase.Instance()).ExecuteReaderAsync();
             if(await reader.ReadAsync())
             {
                 int Id = reader.GetInt32(0);
@@ -31,11 +32,11 @@ namespace ElectricalApplianceStore
             return null;
         }
 
-        public static async Task<User> Sign_UpAsync(SqlConnection connection, string name, string email, string password)
+        public static async Task<User> Sign_UpAsync(string name, string email, string password)
         {
-            if (!await Email.IsEmailExistsAsync(connection, email) && Email.IsValidEmail(email) && password.Length >= MINLENGHT)
+            if (!await UserService.IsEmailExistsAsync(email) && Email.IsValidEmail(email) && password.Length >= MINLENGHT)
             {
-                await new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", connection).ExecuteNonQueryAsync();
+                await new SqlCommand($"insert into Users values ('{name}', '{email}', '{Cryptography.HashPassword(password)}', '{UserType.User}')", SqlDataBase.Instance()).ExecuteNonQueryAsync();
             }else if (password.Length < MINLENGHT)
             {
                 MessageBox.Show($"Длина пароля должна быть больше {MINLENGHT} символов!!!");
@@ -43,7 +44,7 @@ namespace ElectricalApplianceStore
             }
             else if(!Email.IsValidEmail(email))
             {
-                MessageBox.Show("Введите правильную почту!!!");
+                MessageBox.Show("Введите корректную почту!!!");
                 return null;
             }
             else
@@ -54,20 +55,20 @@ namespace ElectricalApplianceStore
 
             MessageBox.Show("Вы успешно зарегестрировались!!!");
             await Email.SendEmailAsync(email, "Success", "Вы успешно зарегестрировались!!!");
-            return await Sign_InAsync(connection, email, password);
+            return await Sign_InAsync(email, password);
         }
 
-        public static void SwitchingForm(SqlConnection connection, User user, Form parentForm)
+        public static void SwitchingForm(User user, Form parentForm)
         {
             parentForm.Visible = false;
             Form form = new Form();
             switch (user.Type)
             {
                 case UserType.User:
-                    form = new UserForm(connection, user);
+                    form = new UserForm(user);
                     break;
                 case UserType.Admin:
-                    form = new SelectiveForm(connection, user);
+                    form = new SelectiveForm(user);
                     break;
                 default:
                     break;

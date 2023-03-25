@@ -13,12 +13,10 @@ namespace ElectricalApplianceStore
 {
     public partial class RegistrationForm : Form
     {
-        SqlConnection connection;
         public User user;
-        public RegistrationForm(SqlConnection connection)
+        public RegistrationForm()
         {
             InitializeComponent();
-            this.connection = connection;
         }
 
         private async void registration_Button_Click(object sender, EventArgs e)
@@ -34,7 +32,7 @@ namespace ElectricalApplianceStore
                 return;
             }
 
-            user = await Authorization.Sign_UpAsync(connection, name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
+            user = await Authorization.Sign_UpAsync(name_TextBox.Text, email_TextBox.Text, password_TextBox.Text);
             if(user != null)
             {
                 DialogResult = DialogResult.OK;

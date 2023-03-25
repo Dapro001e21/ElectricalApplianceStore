@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectricalApplianceStore.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,44 +14,18 @@ namespace ElectricalApplianceStore
 {
     public partial class TwoUserForm : Form
     {
-        SqlConnection connection;
         User user;
         bool isExit = true;
 
-        public TwoUserForm(SqlConnection connection, User user)
+        public TwoUserForm(User user)
         {
             InitializeComponent();
-            this.connection = connection;
             this.user = user;
             type_ComboBox.Items.Add("All");
             type_ComboBox.Items.AddRange(Enum.GetNames(typeof(ElectricalApplianceType)).Cast<string>().ToArray());
             type_ComboBox.SelectedIndex = 0;
-
-            label1.Text = "";
-            SqlDataReader maxReader = new SqlCommand("select Type from ElectricalAppliances where Price = (select max(Price) from ElectricalAppliances)", connection).ExecuteReader();
-            if(maxReader.Read())
-            {
-                label1.Text += $"Самый дорогой вид: {maxReader.GetString(0)}\n";
-            }
-
-            SqlDataReader minReader = new SqlCommand("select Type from ElectricalAppliances where Price = (select min(Price) from ElectricalAppliances)", connection).ExecuteReader();
-            if (minReader.Read())
-            {
-                label1.Text += $"Самый дешевый вид: {minReader.GetString(0)}\n";
-            }
-
-            label1.Text += "Средняя стоимость по каждому виду:\n";
-            SqlDataReader averageReader = new SqlCommand("select Type, (sum(Price) / count(Type)) as Average from ElectricalAppliances group by Type", connection).ExecuteReader();
-            while (averageReader.Read())
-            {
-                label1.Text += $"{averageReader.GetString(0)} - {averageReader.GetDouble(1)}\n";
-            }
-
-            SqlDataReader popularReader = new SqlCommand("select top 1 Type, sum(Amount) as Sum from SellElectricalAppliances group by Type order by Sum desc", connection).ExecuteReader();
-            if(popularReader.Read())
-            {
-                label1.Text += $"Самый популярный вид: {popularReader.GetString(0)}\n";
-            }
+            search_ComboBox.SelectedIndex = 0;
+            label1.Text = ElectricalApplianceService.GetInfoElectricalAppliances();
         }
 
         private void leaveToUserForm_Button_Click(object sender, EventArgs e)
@@ -65,12 +40,12 @@ namespace ElectricalApplianceStore
                 DialogResult = DialogResult.OK;
         }
 
-        private void find_Button_Click(object sender, EventArgs e)
+        private async void find_Button_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(initial_TextBox.Text) || string.IsNullOrWhiteSpace(final_TextBox.Text))
                 return;
 
-            SqlDataReader reader = null;
+            IEnumerable<ElectricalAppliance> electricalAppliances = null;
             listBox1.Items.Clear();
             switch (search_ComboBox.SelectedIndex)
             {
@@ -85,7 +60,7 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where Price >= {initialPrice} and Price <= {finalPrice}", connection).ExecuteReader();
+                    electricalAppliances = (await ElectricalApplianceService.GetElectricalAppliancesAsync()).Where(x => x.Price >= initialPrice && x.Price <= finalPrice);
                     break;
                 case 1:
                     int initialWeight, finalWeight;
@@ -98,7 +73,7 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where Weight >= {initialWeight} and Weight <= {finalWeight}", connection).ExecuteReader();
+                    electricalAppliances = (await ElectricalApplianceService.GetElectricalAppliancesAsync()).Where(x => x.Weight >= initialWeight && x.Weight <= finalWeight);
                     break;
                 case 2:
                     DateTime initialDate;
@@ -112,7 +87,7 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where DateOfRelease >= '{initialDate.ToShortDateString()}' and DateOfRelease <= '{finalDate.ToShortDateString()}'", connection).ExecuteReader();
+                    electricalAppliances = (await ElectricalApplianceService.GetElectricalAppliancesAsync()).Where(x => x.DateOfRelease >= initialDate && x.DateOfRelease<= finalDate);
                     break;
                 case 3:
                     int initialAmount, finalAmount;
@@ -125,38 +100,19 @@ namespace ElectricalApplianceStore
                         return;
                     }
 
-                    reader = new SqlCommand($"select * from ElectricalAppliances where Amount >= {initialAmount} and Amount <= {finalAmount}", connection).ExecuteReader();
+                    electricalAppliances = (await ElectricalApplianceService.GetElectricalAppliancesAsync()).Where(x => x.Amount >= initialAmount && x.Amount <= finalAmount);
                     break;
                 default:
                     break;
             }
-
             if(type_ComboBox.SelectedIndex == 0)
             {
-                listBox1.Items.AddRange(GetElectricalAppliance(reader).ToArray());
+                listBox1.Items.AddRange(electricalAppliances.ToArray());
             }
             else
             {
-                listBox1.Items.AddRange(GetElectricalAppliance(reader).Where(appliance => appliance.Type.ToString() == type_ComboBox.SelectedItem.ToString()).ToArray());
+                listBox1.Items.AddRange(electricalAppliances.Where(appliance => appliance.Type.ToString() == type_ComboBox.SelectedItem.ToString()).ToArray());
             }
-        }
-
-        private IEnumerable<ElectricalAppliance> GetElectricalAppliance(SqlDataReader reader)
-        {
-            List<ElectricalAppliance> result = new List<ElectricalAppliance>();
-            while (reader.Read())
-            {
-                int id = reader.GetInt32(0);
-                string name = reader.GetString(1);
-                DateTime dateOfRelease = reader.GetDateTime(2);
-                string supplier = reader.GetString(3);
-                double price = reader.GetDouble(4);
-                double weight = reader.GetDouble(5);
-                int amount = reader.GetInt32(6);
-                ElectricalApplianceType type = (ElectricalApplianceType)Enum.Parse(typeof(ElectricalApplianceType), reader.GetString(7));
-                result.Add(new ElectricalAppliance(id, name, dateOfRelease, supplier, price, weight, amount, type));
-            }
-            return result;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

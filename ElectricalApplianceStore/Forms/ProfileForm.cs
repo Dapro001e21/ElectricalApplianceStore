@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectricalApplianceStore.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,12 +14,10 @@ namespace ElectricalApplianceStore
 {
     public partial class ProfileForm : Form
     {
-        SqlConnection connection;
-        User user;
-        public ProfileForm(SqlConnection connection, User user)
+        public User user;
+        public ProfileForm(User user)
         {
             InitializeComponent();
-            this.connection = connection;
             this.user = user;
             name_TextBox.Text = user.Name;
             email_TextBox.Text = user.Email;
@@ -26,69 +25,28 @@ namespace ElectricalApplianceStore
 
         private async void save_Button_Click(object sender, EventArgs e)
         {
-            bool isUpdate = false;
-            if(name_TextBox.Text != user.Name && !string.IsNullOrWhiteSpace(email_TextBox.Text))
+            if (await UserService.UpdateUserInfo(name_TextBox.Text, email_TextBox.Text, newPassword_TextBox.Text, user))
             {
-                new SqlCommand($"update Users set Name = '{name_TextBox.Text}' where Id = {user.Id}", connection).ExecuteNonQuery();
-                isUpdate = true;
+                user = await UserService.GetUserAsync(user.Id);
+                MessageBox.Show("Данные успешно сохранены!!!");
+            }
+            else
+            {
+                name_TextBox.Text = user.Name;
+                email_TextBox.Text = user.Email;
             }
 
-            if(email_TextBox.Text != user.Email && !string.IsNullOrWhiteSpace(email_TextBox.Text))
+            if (Cryptography.HashPassword(password_TextBox.Text) != user.Password)
             {
-                if (!Email.IsEmailExistsAsync(connection, email_TextBox.Text).Result)
-                {
-                    new SqlCommand($"update Users set Email = '{email_TextBox.Text}' where Id = {user.Id}", connection).ExecuteNonQuery();
-                    await Email.SendEmailAsync(email_TextBox.Text, "Success", "Почта успешна изменена!!!");
-                }
-                else
-                {
-                    MessageBox.Show("Пользователь с таким email уже существует!!!");
-                    return;
-                }
-                isUpdate = true;
-            }
-
-            if(Cryptography.HashPassword(newPassword_TextBox.Text) != user.Password && newPassword_TextBox.Text.Length >= Authorization.MINLENGHT && !string.IsNullOrWhiteSpace(newPassword_TextBox.Text))
-            {
-                new SqlCommand($"update Users set Password = '{Cryptography.HashPassword(newPassword_TextBox.Text)}' where Id = {user.Id}", connection).ExecuteNonQuery();
-                await Email.SendEmailAsync(email_TextBox.Text, "Success", "Пароль успешно изменён!!!");
+                password_TextBox.Text = "";
+                newPassword_TextBox.Text = "";
                 label5.Enabled = false;
                 newPassword_TextBox.Enabled = false;
                 newPassword_CheckBox.Enabled = false;
-                newPassword_TextBox.Text = "";
-                newPassword_CheckBox.Checked = false;
-                password_TextBox.Text = "";
                 password_CheckBox.Checked = false;
-                isUpdate = true;
+                newPassword_CheckBox.Checked = false;
+                password_TextBox.Enabled = true;
             }
-            else if(Cryptography.HashPassword(newPassword_TextBox.Text) == user.Password)
-            {
-                MessageBox.Show("Пароль не должен совпадать с предыдущим!!!");
-            }else if(newPassword_TextBox.Enabled && newPassword_TextBox.Text.Length < Authorization.MINLENGHT && !string.IsNullOrWhiteSpace(newPassword_TextBox.Text))
-            {
-                MessageBox.Show($"Длина пароля должна быть больше {Authorization.MINLENGHT} символов!!!");
-            }
-
-            if (isUpdate)
-            {
-                MessageBox.Show("Данные успешно сохранены!!!");
-                UpdateUser(user.Id);
-            }
-        }
-
-        private void UpdateUser(int id)
-        {
-            SqlDataReader reader = new SqlCommand($"select * from Users where Id = {id}", connection).ExecuteReader();
-            if (reader.Read())
-            {
-                user.Id = reader.GetInt32(0);
-                user.Name = reader.GetString(1);
-                user.Email = reader.GetString(2);
-                user.Password = reader.GetString(3);
-                user.Type = (UserType)Enum.Parse(typeof(UserType), reader.GetString(4));
-            }
-
-            reader.Close();
         }
 
         private void password_TextBox_TextChanged(object sender, EventArgs e)
@@ -98,6 +56,7 @@ namespace ElectricalApplianceStore
                 label5.Enabled = true;
                 newPassword_TextBox.Enabled = true;
                 newPassword_CheckBox.Enabled = true;
+                password_TextBox.Enabled = false;
             }
         }
 

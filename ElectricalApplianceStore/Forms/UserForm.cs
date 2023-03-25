@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectricalApplianceStore.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,15 +14,13 @@ namespace ElectricalApplianceStore
 {
     public partial class UserForm : Form
     {
-        SqlConnection connection;
         User user;
         bool isExit = true;
         List<ElectricalAppliance> electricalAppliances;
 
-        public UserForm(SqlConnection connection, User user)
+        public UserForm(User user)
         {
             InitializeComponent();
-            this.connection = connection;
             this.user = user;
 
             if (user.Type == UserType.Admin)
@@ -40,7 +39,7 @@ namespace ElectricalApplianceStore
         {
             electricalAppliances_ListBox.Items.Clear();
             electricalAppliances.Clear();
-            SqlDataReader reader = new SqlCommand("select * from ElectricalAppliances", connection).ExecuteReader();
+            SqlDataReader reader = new SqlCommand("select * from ElectricalAppliances", SqlDataBase.Instance()).ExecuteReader();
             while (reader.Read())
             {
                 int id = reader.GetInt32(0);
@@ -127,34 +126,20 @@ namespace ElectricalApplianceStore
             list.ForEach(appliance => electricalAppliances_ListBox.Items.Add(appliance));
         }
 
-        private void buy_Button_Click(object sender, EventArgs e)
+        private async void buy_Button_Click(object sender, EventArgs e)
         {
             if (electricalAppliances_ListBox.SelectedIndex == -1)
                 return;
-            ElectricalAppliance appliance = (ElectricalAppliance)electricalAppliances_ListBox.SelectedItem;
-            if (numericUpDown1.Value > appliance.Amount)
+            if(await ElectricalApplianceService.BuyElectricalAppliance((ElectricalAppliance)electricalAppliances_ListBox.SelectedItem, (int)numericUpDown1.Value, user))
             {
-                MessageBox.Show("Такого количества товара нету!!!");
-                return;
-            }
-
-            if (appliance.Amount > 0)
-            {
-                appliance.Amount -= (int)numericUpDown1.Value;
-                new SqlCommand($"update ElectricalAppliances set Amount = {appliance.Amount} where Id = {appliance.Id}", connection).ExecuteNonQuery();
-                new SqlCommand($"insert into SellElectricalAppliances values ('{appliance.Name}', '{DateTime.Now.ToShortDateString()}', {appliance.Price}, {numericUpDown1.Value}, {user.Id}, '{appliance.Type}')", connection).ExecuteNonQuery();
                 ShowElectricalAppliances();
-            }
-            else
-            {
-                MessageBox.Show("Товар отсутствует в магазине!!!");
             }
         }
 
         private void pageTwo_Button_Click(object sender, EventArgs e)
         {
             Visible = false;
-            if(new TwoUserForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            if(new TwoUserForm(user).ShowDialog() == DialogResult.Cancel)
             {
                 Visible = true;
             }
@@ -163,7 +148,7 @@ namespace ElectricalApplianceStore
         private void profile_Buton_Click(object sender, EventArgs e)
         {
             Visible = false;
-            if (new ProfileForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            if (new ProfileForm(user).ShowDialog() == DialogResult.Cancel)
             {
                 Visible = true;
             }

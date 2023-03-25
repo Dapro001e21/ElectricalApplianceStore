@@ -13,14 +13,12 @@ namespace ElectricalApplianceStore
 {
     public partial class SelectiveForm : Form
     {
-        SqlConnection connection;
         User user;
         bool isExit = true;
 
-        public SelectiveForm(SqlConnection connection, User user)
+        public SelectiveForm(User user)
         {
             InitializeComponent();
-            this.connection = connection;
             this.user = user;
         }
 
@@ -33,7 +31,7 @@ namespace ElectricalApplianceStore
         private void userForm_Button_Click(object sender, EventArgs e)
         {
             Visible = false;
-            if(new UserForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            if(new UserForm(user).ShowDialog() == DialogResult.Cancel)
             {
                 Visible = true;
             }
@@ -42,7 +40,7 @@ namespace ElectricalApplianceStore
         private void adminForm_Button_Click(object sender, EventArgs e)
         {
             Visible = false;
-            if (new AdminForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            if (new AdminForm(user).ShowDialog() == DialogResult.Cancel)
             {
                 Visible = true;
             }
@@ -57,9 +55,11 @@ namespace ElectricalApplianceStore
         private void profileForm_Button_Click(object sender, EventArgs e)
         {
             Visible = false;
-            if (new ProfileForm(connection, user).ShowDialog() == DialogResult.Cancel)
+            ProfileForm form = new ProfileForm(user);
+            if (form.ShowDialog() == DialogResult.Cancel)
             {
                 Visible = true;
+                user = form.user;
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -25,14 +24,6 @@ namespace ElectricalApplianceStore
             smtp.Credentials = new NetworkCredential(EMAIL, PASSWORD);
             smtp.EnableSsl = true;
             await smtp.SendMailAsync(message);
-        }
-
-        public static async Task<bool> IsEmailExistsAsync(SqlConnection connection, string email)
-        {
-            SqlDataReader checkEmailReader = await new SqlCommand($"select * from Users where Email = '{email}'", connection).ExecuteReaderAsync();
-            if (await checkEmailReader.ReadAsync())
-                return true;
-            return false;
         }
 
         public static bool IsValidEmail(string email)

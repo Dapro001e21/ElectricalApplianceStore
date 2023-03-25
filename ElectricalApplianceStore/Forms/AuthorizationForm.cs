@@ -13,12 +13,10 @@ namespace ElectricalApplianceStore
 {
     public partial class AuthorizationForm : Form
     {
-        SqlConnection connection;
         public AuthorizationForm()
         {
             InitializeComponent();
-            connection = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=ElectricalApplianceStore;Integrated Security=true;MultipleActiveResultSets=True;");
-            connection.Open();
+            SqlDataBase.connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=ElectricalApplianceStore;Integrated Security=true;MultipleActiveResultSets=True;";
         }
 
         private async void Sign_In_Button_Click(object sender, EventArgs e)
@@ -29,27 +27,27 @@ namespace ElectricalApplianceStore
                 return;
             }
 
-            User user = await Authorization.Sign_InAsync(connection, email_TextBox.Text, password_TextBox.Text);
+            User user = await Authorization.Sign_InAsync(email_TextBox.Text, password_TextBox.Text);
             email_TextBox.Text = "";
             password_TextBox.Text = "";
 
             if(user != null)
             {
-                Authorization.SwitchingForm(connection, user, this);
+                Authorization.SwitchingForm(user, this);
             }
         }
 
         private void Sign_Up_Button_Click(object sender, EventArgs e)
         {
             Visible = false;
-            RegistrationForm form = new RegistrationForm(connection);
+            RegistrationForm form = new RegistrationForm();
             DialogResult dialogResult = form.ShowDialog();
             if (dialogResult == DialogResult.Cancel)
             {
                 Visible = true;
             }else if(dialogResult == DialogResult.OK)
             {
-                Authorization.SwitchingForm(connection, form.user, this);
+                Authorization.SwitchingForm(form.user, this);
             }
         }
 
@@ -64,7 +62,7 @@ namespace ElectricalApplianceStore
         private void resetPassword_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Visible = false;
-            if(new ResetPasswordForm(connection).ShowDialog() == DialogResult.Cancel)
+            if(new ResetPasswordForm().ShowDialog() == DialogResult.Cancel)
             {
                 Visible = true;
             }
